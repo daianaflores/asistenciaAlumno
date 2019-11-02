@@ -1,12 +1,17 @@
 package asistenciaalumnos.app.model;
 
-import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "USUARIO")
 public class Administrativo extends Usuario{
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
     //dejo clase vacía por las dudas revisar como inicializar
     @PrePersist
     //seteo al crear q siempre va a ser un usuario de tipo docente a partir del id de Administrativo
@@ -19,4 +24,13 @@ public class Administrativo extends Usuario{
         super();
     }
 
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

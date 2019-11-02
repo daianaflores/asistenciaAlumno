@@ -10,22 +10,16 @@ import asistenciaalumnos.app.service.EstadoService;
 import asistenciaalumnos.app.service.TipoUsuarioService;
 import asistenciaalumnos.configuracionconeccion.Conexion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class UsuarioDAO implements GenericDAO<Usuario> {
 
-    @Autowired
-    TipoUsuarioService tipoUsuarioService;
 
-    @Autowired
-    EstadoService estadoService;
-
-    @Autowired
-    ContactoService contactoService;
 
     public List<Usuario> findAll(){
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
@@ -39,15 +33,15 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             while (rs.next()) {
                 usuario = new Usuario();
                 usuario.setId(rs.getLong("id"));
-                usuario.setTipoUsuario(tipoUsuarioService.findById(rs.getLong("IdTipoUsuario")));
+               // usuario.setTipoUsuario(tipoUsuarioService.findById(rs.getLong("IdTipoUsuario")));
                 usuario.setNombre(rs.getNString("Nombre"));
                 usuario.setApellido(rs.getNString("Apellido"));
                 usuario.setDni(rs.getLong("DNI"));
                 usuario.setFechaDeNacimiento(rs.getDate("Fechanac"));
                 usuario.setLegajo(rs.getLong("Legajo"));
                 usuario.setUsser(rs.getNString("Usuario"));
-                usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
-                usuario.setContacto(contactoService.findById(rs.getLong("IdContacto")));
+               // usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
+               // usuario.setContacto(contactoService.findById(rs.getLong("IdContacto")));
 
                usuarios.add(usuario);
             }
@@ -71,15 +65,15 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             ResultSet rs = stmn.executeQuery();
                 usuario = new Usuario();
                 usuario.setId(rs.getLong("id"));
-                usuario.setTipoUsuario(tipoUsuarioService.findById(rs.getLong("IdTipoUsuario")));
+                //usuario.setTipoUsuario(tipoUsuarioService.findById(rs.getLong("IdTipoUsuario")));
                 usuario.setNombre(rs.getNString("Nombre"));
                 usuario.setApellido(rs.getNString("Apellido"));
                 usuario.setDni(rs.getLong("DNI"));
                 usuario.setFechaDeNacimiento(rs.getDate("Fechanac"));
                 usuario.setLegajo(rs.getLong("Legajo"));
                 usuario.setUsser(rs.getNString("Usuario"));
-                usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
-                usuario.setContacto(contactoService.findById(rs.getLong("IdContacto")));
+                //usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
+                //usuario.setContacto(contactoService.findById(rs.getLong("IdContacto")));
 
             rs.close();
             stmn.close();

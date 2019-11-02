@@ -23,7 +23,7 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/lala2")
     public String hello() throws Exception
     {
         String message = usuarioService.getHello();

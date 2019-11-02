@@ -20,9 +20,16 @@ public class Cursada extends Auditable<String>{
     @JoinColumn(name = "ID_MATERIA", referencedColumnName = "ID")
     private Materia materia;
 
-    @OneToMany(mappedBy = "cursada",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ALUMNO", referencedColumnName = "ID")
+
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(
+            name="CURSADA_ALUMNO",
+            joinColumns=@JoinColumn(name="ID_CURSADA", referencedColumnName="ID"),
+            inverseJoinColumns=@JoinColumn(name="ID_ALUMNO", referencedColumnName="MATRICULA"))
     private Set<Alumno> alumnos;
+
+
 
     //va a tabla tipo Docente o Usuario? no se entiende el script de DB
     @OneToOne(orphanRemoval=true)

@@ -2,10 +2,11 @@ package asistenciaalumnos.app.service;
 
 import asistenciaalumnos.app.model.DTO.UsuarioDto;
 import asistenciaalumnos.app.model.Usuario;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-public interface UsuarioService {
+@Service
+public interface  UsuarioService {
 
     String getHello() throws Exception;
 

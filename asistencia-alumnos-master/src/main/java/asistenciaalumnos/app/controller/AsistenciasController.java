@@ -30,7 +30,7 @@ public class AsistenciasController {
     @Autowired
     AsistenciaService asistenciaService;
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/lala")
     public String hello() throws Exception 
     {
         String message = asistenciaService.getHello();
