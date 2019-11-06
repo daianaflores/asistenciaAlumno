@@ -34,9 +34,10 @@ public class CursadaService {
         return cursadaDtoList;
     }
     @Transactional
-    public void updateCursada(Cursada cursada, UserDetails user){
+    public void updateCursada(Cursada cObject, UserDetails user){
         //me traigo la cursada ya grabada para modificar sus propiedades y luego lo vuelvo a grabar
-        Cursada cursadaDb = findById(cursada.getId());
+        Cursada cursadaDb = findById(cObject.getId());
+        mergeObjects(cursadaDb,cObject);
         bindProperties(cursadaDb,user,new Date());
         save(cursadaDb);
     }
@@ -53,6 +54,19 @@ public class CursadaService {
             cObject.setAuditable(currentDate,user.getUsername());
         }
         return cObject;
+    }
+
+    //seteo proiedades que llegan desde el front end a mano
+    public Cursada mergeObjects(Cursada cursadaDb,Cursada cObject){
+        cursadaDb.setAlumnos(cObject.getAlumnos());
+        cursadaDb.setCuatrimestre(cObject.getCuatrimestre());
+        cursadaDb.setDocente(cObject.getDocente());
+        cursadaDb.setEstado(cObject.getEstado());
+        cursadaDb.setEstado(cObject.getEstado());
+        cursadaDb.setMateria(cObject.getMateria());
+        cursadaDb.setYear(cObject.getYear());
+        return cursadaDb;
+
     }
 
 }

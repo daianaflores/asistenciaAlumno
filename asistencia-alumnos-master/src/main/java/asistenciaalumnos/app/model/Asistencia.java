@@ -3,6 +3,7 @@ package asistenciaalumnos.app.model;
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -26,6 +27,10 @@ public class Asistencia extends Auditable<String>{
 
     @OneToMany(mappedBy = "asistencia",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<AsistenciaAlumno> asistenciaAlumnos;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESTADO", nullable = false)
+    private Estado estado;
 
     @PrePersist
     protected void onCreate() {
@@ -73,5 +78,13 @@ public class Asistencia extends Auditable<String>{
 
     public void setAsistenciaAlumnos(Set<AsistenciaAlumno> asistenciaAlumnos) {
         this.asistenciaAlumnos = asistenciaAlumnos;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
