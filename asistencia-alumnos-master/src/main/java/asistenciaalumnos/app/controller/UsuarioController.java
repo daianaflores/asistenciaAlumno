@@ -23,7 +23,10 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @GetMapping(path = "/lala2")
+    private static final Long ADMINISTRATIVO = 1L;
+    private static final Long DOCENTE = 2L;
+
+    @GetMapping(path = "/usuarioHello")
     public String hello() throws Exception
     {
         String message = usuarioService.getHello();
@@ -42,6 +45,17 @@ public class UsuarioController {
     }
 
 
+    @GetMapping(path = "/docentes")
+    //mismo camino q usuario al DAO pero traer los usuarios q tengan tipoUsuario.id=DOCENTE
+    public ResponseEntity<?> docentes() throws Exception {
+        List<UsuarioDto> usuarios = new ArrayList<UsuarioDto>();
+        try {
+            usuarios = usuarioService.getUsuarios();
+        } catch (Exception e){
+            return new ResponseEntity<List<UsuarioDto>>(usuarios, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<List<UsuarioDto>>(usuarios, HttpStatus.OK);
+    }
 
     //service devuelve int no instancia de usuario
     /*@PostMapping(path = "/usuarios")

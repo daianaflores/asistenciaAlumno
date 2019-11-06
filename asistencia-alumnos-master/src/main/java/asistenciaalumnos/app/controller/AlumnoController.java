@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import asistenciaalumnos.app.configs.CurrentUser;
+import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.DTO.AlumnoDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +35,9 @@ public class AlumnoController
 {
     @Autowired
     AlumnoService alumnoService;
+
+    private static final Long ADMINISTRATIVO = 1L;
+    private static final Long DOCENTE = 2L;
 
     //ejemplo instanciar logger
     private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
@@ -70,12 +75,13 @@ public class AlumnoController
     }
 
     @PostMapping(path = "/alumnos")
-    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno) throws Exception
-    {
-        Alumno alumnoResponse = alumnoService.altaAlumno(alumno);
-        AlumnoDto alumnoDto = new AlumnoDto(alumno);
-
-        return new ResponseEntity<AlumnoDto>(alumnoDto, HttpStatus.OK);
+    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno, @CurrentUser UserDetails user) throws Exception{
+        if(user.getTipoUsuario().getId() == ADMINISTRATIVO){
+            Alumno alumnoResponse = alumnoService.altaAlumno(alumno);
+            AlumnoDto alumnoDto = new AlumnoDto(alumno);
+            return new ResponseEntity<AlumnoDto>(alumnoDto, HttpStatus.OK);
+        }
+        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping(path = "/alumnos")

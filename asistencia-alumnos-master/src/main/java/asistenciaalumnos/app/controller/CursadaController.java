@@ -30,6 +30,9 @@ public class CursadaController {
     @Autowired
     CursadaService cursadaService;
 
+    private static final Long ADMINISTRATIVO = 1L;
+    private static final Long DOCENTE = 2L;
+
     private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
 
     @GetMapping(path = "/cursadas")
@@ -65,17 +68,12 @@ public class CursadaController {
     public ResponseEntity<?> altaCursada(HttpServletRequest request, @CurrentUser UserDetails user,
                                          @RequestParam("cursada")Cursada cursada,
                                          @RequestParam("fecha") Date fecha  ) throws Exception {
-        Cursada cursadaResponse = cursadaService.bindProperties(cursada, user, fecha);
-        try {
-            cursadaService.save(cursadaResponse);
-        }catch (Exception e){
-            LOGGER.error(e);
-            LOGGER.error(HttpStatus.INTERNAL_SERVER_ERROR);
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if(user.getTipoUsuario().getId()==ADMINISTRATIVO) {
+            Cursada cursadaResponse = cursadaService.bindProperties(cursada, user, fecha);
+            CursadaDto cursadaDto = new CursadaDto(cursadaResponse);
+            return new ResponseEntity<CursadaDto>(cursadaDto, HttpStatus.OK);
         }
-        CursadaDto cursadaDto = new CursadaDto(cursadaResponse);
-        return new ResponseEntity<CursadaDto>(cursadaDto, HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
 
