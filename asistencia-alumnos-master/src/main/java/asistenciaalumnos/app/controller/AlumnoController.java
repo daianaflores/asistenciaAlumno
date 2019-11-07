@@ -2,8 +2,6 @@ package asistenciaalumnos.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import asistenciaalumnos.app.configs.CurrentUser;
 import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.DTO.AlumnoDto;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.service.AlumnoService;
 
@@ -31,8 +28,7 @@ import asistenciaalumnos.app.service.AlumnoService;
                        RequestMethod.POST,
                        RequestMethod.PUT,
                        RequestMethod.DELETE})
-public class AlumnoController 
-{
+public class AlumnoController{
     @Autowired
     AlumnoService alumnoService;
 
