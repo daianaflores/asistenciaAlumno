@@ -37,16 +37,14 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
     }
 
     @Override
-    public List<AsistenciaDto> getAsistencias() throws Exception
-    {
+    public List<AsistenciaDto> getAsistencias() throws Exception {
         List<Asistencia> asistencias = asistenciaRepository.findAll();
         List<AsistenciaDto> asistenciaDtoList = asistencias.stream().map(i -> new AsistenciaDto(i)).collect(Collectors.toList());
-
         return asistenciaDtoList;
     }
 
     @Override
-    //seguir desarrollando
+    //seguir desarrollando -->se debería poder modificar los presentes una vez grabados?
     public Asistencia modificacionAsistencia(Asistencia asistencia,UserDetails user,Date fecha) throws Exception{
         Asistencia asistenciaDB = findById(asistencia.getId());
         mergeObjects(asistenciaDB,asistencia);
@@ -73,8 +71,6 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
     //hacer borrado logico con seteo de columna en estado 'dado de baja'
     public void bajaAsistencia(Asistencia aObject) throws Exception {
         aObject.getEstado().setId(DADO_DE_BAJA);
-
-
     }
 
 
@@ -93,6 +89,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
             AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno();
             asistenciaAlumno.setAlumno(alumno);
             asistenciaAlumno.setAsistencia(aObject);
+            asistenciaAlumno.setPresent(true);// seteo el valor presente al crearlo //se puede cambiar
             set.add(asistenciaAlumno);
         }
         return set;

@@ -72,11 +72,14 @@ public class AsistenciasController {
     @PutMapping(path = "/updateAssistance")
     public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia,@CurrentUser UserDetails user,
                                                     @RequestParam("fecha")  Date fecha) throws Exception{
-    	Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, user, fecha);
-        if (asistenciaResponse == null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        if(user.getTipoUsuario().getId() == ADMINISTRATIVO) {
+            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, user, fecha);
+            if (asistenciaResponse == null) {
+                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
         }
-        return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
     @DeleteMapping(path = "/asistencias/{id}")

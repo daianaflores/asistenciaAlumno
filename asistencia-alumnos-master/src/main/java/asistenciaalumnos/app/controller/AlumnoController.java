@@ -58,9 +58,7 @@ public class AlumnoController
     }
 
     @GetMapping(path = "/alumnos")
-    public ResponseEntity<?> alumnos() throws Exception 
-    {
-
+    public ResponseEntity<?> alumnos() throws Exception {
         List<AlumnoDto> alumnos = new ArrayList<AlumnoDto>();
         try {
             alumnos = alumnoService.getAlumnos();
@@ -70,7 +68,6 @@ public class AlumnoController
             ex.printStackTrace();
             return new ResponseEntity<List<AlumnoDto>>(alumnos, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         return new ResponseEntity<List<AlumnoDto>>(alumnos, HttpStatus.OK);
     }
 
@@ -85,8 +82,7 @@ public class AlumnoController
     }
 
     @PutMapping(path = "/alumnos")
-    public ResponseEntity<?> modificacionAlumno(@RequestBody Alumno alumno) throws Exception
-    {
+    public ResponseEntity<?> modificacionAlumno(@RequestBody Alumno alumno) throws Exception{
         Alumno alumnoResponse = alumnoService.modificacionAlumno(alumno);
         AlumnoDto alumnoDto = new AlumnoDto(alumnoResponse);
         if (alumnoResponse == null) {
@@ -96,10 +92,13 @@ public class AlumnoController
     }
 
     @DeleteMapping(path = "/alumnos/{id}")
-    public ResponseEntity<?> bajaAlumno(@PathVariable("id") Long id) throws Exception
-    {
-        alumnoService.bajaAlumno(id);
-
+    public ResponseEntity<?> bajaAlumno(@PathVariable("id") Long id) throws Exception {
+        try {
+            alumnoService.bajaAlumno(id);
+        }catch(Exception e){
+            LOGGER.error(e);
+            e.printStackTrace();
+        }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
