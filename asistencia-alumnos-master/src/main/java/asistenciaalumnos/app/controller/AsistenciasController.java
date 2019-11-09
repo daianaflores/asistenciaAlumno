@@ -56,6 +56,13 @@ public class AsistenciasController {
         return new ResponseEntity<List<AsistenciaDto>>(asistencias, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/findAsistencias")
+    public ResponseEntity<?> findAsistencias(HttpServletRequest request, @CurrentUser UserDetails user,
+                                             @RequestParam("fecha")  Date fecha,
+                                             @RequestParam("cursada")Cursada cursada) throws Exception{
+        List<AsistenciaDto> asistencias = asistenciaService.findAsistenciasByFechaAndCursada(cursada,fecha);
+        return new ResponseEntity<List<AsistenciaDto>>(asistencias, HttpStatus.OK);
+    }
 
     //grabar la asistencia
     @PostMapping(path = "/newAssistance")

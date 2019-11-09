@@ -3,7 +3,6 @@ package asistenciaalumnos.app.service;
 import java.util.Date;
 import java.util.List;
 
-import asistenciaalumnos.app.configs.CurrentUser;
 import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Asistencia;
@@ -23,4 +22,5 @@ public interface AsistenciaService {
 
     void bajaAsistencia(Asistencia asistencia) throws Exception;
 
+    List<AsistenciaDto> findAsistenciasByFechaAndCursada(Cursada cursada, Date fecha);
 }

@@ -4,7 +4,6 @@ package asistenciaalumnos.app.service.impl;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import asistenciaalumnos.app.configs.CurrentUser;
 import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.AsistenciaAlumno;
@@ -71,6 +70,14 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
     //hacer borrado logico con seteo de columna en estado 'dado de baja'
     public void bajaAsistencia(Asistencia aObject) throws Exception {
         aObject.getEstado().setId(DADO_DE_BAJA);
+    }
+
+    @Override
+    public List<AsistenciaDto> findAsistenciasByFechaAndCursada(Cursada cursada, Date fecha) {
+        List<Asistencia> asistencias = asistenciaRepository.findAsistenciasByFechaAndCursada(cursada.getId(),fecha);
+        List<AsistenciaDto> asistenciaDtoList = asistencias.stream().map(i -> new AsistenciaDto(i)).collect(Collectors.toList());
+        return asistenciaDtoList;
+
     }
 
 
