@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: mssql
 
 ---
 spring:
@@ -15,13 +15,28 @@ spring:
     driverClassName: org.h2.Driver
   profiles: local
 #  datasource:
-    #    platform: hsqldb
-    #    initialization-mode: always
-  #    continue-on-error: false
+#        platform: hsqldb
+#        initialization-mode: always
+#      continue-on-error: false
   jpa:
     #properties:
     #  hibernate:
     #    dialect: org.hibernate.dialect.HSQLDialect
     hibernate:
       ddl-auto: create-drop
+    show-sql: true
+
+---
+spring:
+  profiles: mssql
+  datasource:
+    url: jdbc:sqlserver://redesyvaeltercero.ddns.net:1433;databaseName=fines2
+    username: FINES
+    password: Lujan2019
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    initialization-mode: never
+  jpa:
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    hibernate:
+      ddl-auto: update
     show-sql: true
