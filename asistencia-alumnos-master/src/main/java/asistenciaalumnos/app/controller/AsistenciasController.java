@@ -89,7 +89,7 @@ public class AsistenciasController {
         return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
-    @DeleteMapping(path = "/asistencias/{id}")
+    @DeleteMapping(path = "/asistencia/{id}")
     public ResponseEntity<?> bajaAsistencia(@PathVariable("id") Long id) throws Exception {
         Asistencia aObject = asistenciaServiceImpl.findById(id);
         asistenciaService.bajaAsistencia(aObject);

@@ -33,10 +33,10 @@ public class CursadaController {
     private static final Long ADMINISTRATIVO = 1L;
     private static final Long DOCENTE = 2L;
 
-    private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
+    private static  final Logger LOGGER = LogManager.getLogger(CursadaController.class);
 
     @GetMapping(path = "/cursadas")
-    public ResponseEntity<?> alumnos() throws Exception
+    public ResponseEntity<?> cursadas() throws Exception
     {
         List<CursadaDto> cursadas = new ArrayList<CursadaDto>();
         try {

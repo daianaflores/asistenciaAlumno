@@ -18,6 +18,10 @@ public class Materia extends Auditable<String>{
     @Column(name = "descripcion", length = 500, nullable = false)
     private String descripcion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESTADO", nullable = false)
+    private Estado estado;
+
     @PrePersist
     protected void onCreate() {
         this.creationDate = new Date();
@@ -48,5 +52,13 @@ public class Materia extends Auditable<String>{
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
