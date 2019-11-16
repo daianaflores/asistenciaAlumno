@@ -13,7 +13,7 @@ public class Alumno extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "MATRICULA", unique = true, nullable = false)
-	private Long matricula;
+	private Long id;
 
 	@Column(name = "nombre", length = 30, nullable = false)
 	private String nombre;
@@ -102,12 +102,12 @@ public class Alumno extends Auditable<String>{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Long getMatricula() {
-		return matricula;
+	public Long getId() {
+		return id;
 	}
 
-	public void setMatricula(Long matricula) {
-		this.matricula = matricula;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Estado getEstado() {

@@ -47,8 +47,8 @@ public class CursadaService {
 
         /*comparo listas de alumnos en Cursada ya persistidas con las que me llegan del front end para
         saber si se agregaron o quitaron alumnos de dicha lista*/
-        List<Alumno> added = cObjectAlumnosList.stream().filter(a -> cursadaDbAlumnos.stream().noneMatch(dbA -> dbA.getMatricula().equals(a.getMatricula()))).collect(Collectors.toList());
-        List<Alumno> removed= cursadaDbAlumnos.stream().filter(dbA -> cObjectAlumnosList.stream().noneMatch(a -> a.getMatricula().equals(dbA.getMatricula()))).collect(Collectors.toList());
+        List<Alumno> added = cObjectAlumnosList.stream().filter(a -> cursadaDbAlumnos.stream().noneMatch(dbA -> dbA.getId().equals(a.getId()))).collect(Collectors.toList());
+        List<Alumno> removed= cursadaDbAlumnos.stream().filter(dbA -> cObjectAlumnosList.stream().noneMatch(a -> a.getId().equals(dbA.getId()))).collect(Collectors.toList());
         mergeObjects(cursadaDb,cObject);
         bindProperties(cursadaDb,user,new Date());
         /*reviso las listas y agrego o saco alumnos según sea necesario*/
@@ -61,7 +61,7 @@ public class CursadaService {
                         LOGGER.info("El alumno ya se encuentra dado de alta en la cursada");
                     } else {
                         nonExistinAlumnos.add(a);
-                        LOGGER.info("se agregó al alumno/a con número de matricula:" + a.getMatricula() + " a la cursada");
+                        LOGGER.info("se agregó al alumno/a con número de matricula:" + a.getId() + " a la cursada");
                     }
                 }
                 if (!nonExistinAlumnos.isEmpty()) {
@@ -73,7 +73,7 @@ public class CursadaService {
             if (!removed.isEmpty()) {
                 for (Alumno a : removed) {
                     cursadaDb.getAlumnos().remove(a);
-                    LOGGER.info("se removió al alumno/a con número de matricula:" + a.getMatricula() + " de la cursada");
+                    LOGGER.info("se removió al alumno/a con número de matricula:" + a.getId() + " de la cursada");
                 }
                 save(cursadaDb);
             }

@@ -42,19 +42,19 @@ public class MateriaService {
     public void save(Materia materia){materiaRepository.save(materia);}
 
     //metodo para setear los campos de auditoría
-    public Materia bindProperties(Materia mObject, UserDetails user, Date currentDate){
+    public Materia bindProperties(Materia mObject, Date currentDate){
         if(mObject.getId() != null ){
-            mObject.setAuditableUpdate(currentDate,user.getUsername());
+            mObject.setAuditableUpdate(currentDate,"Logged user");
         }else{
-            mObject.setAuditable(currentDate,user.getUsername());
+            mObject.setAuditable(currentDate,"Logged user");
         }
         return mObject;
     }
 
-    public void updateMateria(Materia mObject,UserDetails user){
+    public void updateMateria(Materia mObject){
         Materia materiadb = findById(mObject.getId());
         mergeObjects(materiadb,mObject);
-        bindProperties(materiadb,user,new Date());
+        bindProperties(materiadb,new Date());
         save(materiadb);
     }
 

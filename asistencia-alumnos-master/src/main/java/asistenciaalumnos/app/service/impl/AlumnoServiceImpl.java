@@ -56,7 +56,8 @@ public class AlumnoServiceImpl implements AlumnoService
     @Override
     public Alumno modificacionAlumno(Alumno alumno) throws Exception 
     {
-        boolean alumnoExist = alumnoRepository.existsById(alumno.getDNI());
+        boolean alumnoExist = alumnoRepository.existsById(alumno.getId());
+        Optional<Alumno> lala = alumnoRepository.findById(alumno.getId());
         if (!alumnoExist)
         {
             return null;

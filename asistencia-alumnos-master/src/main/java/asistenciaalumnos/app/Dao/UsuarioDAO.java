@@ -28,7 +28,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
     ContactoService contactoService;
 
     public List<Usuario> findAll(){
-        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+        List<Usuario> usuarios = new ArrayList<Usuario>();
         Connection con = Conexion.getConexion();
 
         try {

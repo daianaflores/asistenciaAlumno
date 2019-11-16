@@ -5,15 +5,25 @@ import java.util.Date;
 public class Usuario extends Auditable<String> {
 
     private Long id ;
+
     private TipoUsuario tipoUsuario;
+
     private String nombre;
+
     private String apellido;
+
     private Long dni;
+
     private Date fechaDeNacimiento;
+
     private Long legajo;
+
     private String usser;
+
     private String password;
+
     private Estado estado;
+
     private Contacto contacto;
 
     public Long getId() {

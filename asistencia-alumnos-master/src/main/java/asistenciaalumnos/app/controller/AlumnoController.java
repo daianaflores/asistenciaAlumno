@@ -64,17 +64,10 @@ public class AlumnoController {
     }
 
     @PostMapping(path = "/alumnos")
-    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno 
-        // @CurrentUser UserDetails 
-    // @RequestParam String userId
-    ) throws Exception{
-        // if(user.getTipoUsuario().getId() == ADMINISTRATIVO){
-            // if(userId == ADMINISTRATIVO){
+    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno ) throws Exception{
             Alumno alumnoResponse = alumnoService.altaAlumno(alumno);
             AlumnoDto alumnoDto = new AlumnoDto(alumno);
             return new ResponseEntity<AlumnoDto>(alumnoDto, HttpStatus.OK);
-        // }
-        // return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping(path = "/alumnos")

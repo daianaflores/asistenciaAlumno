@@ -27,7 +27,7 @@ public class AlumnoDto {
     }
 
     public Long getMatricula(){
-        return this.alumno.getMatricula();
+        return this.alumno.getId();
     }
 
     public Contacto getContacto(){

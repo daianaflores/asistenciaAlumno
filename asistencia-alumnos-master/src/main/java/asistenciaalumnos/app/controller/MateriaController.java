@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,8 @@ public class MateriaController {
 
     @Autowired
     MateriaService materiaService;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 
     private static final Long ADMINISTRATIVO = 1L;
     private static final Long DOCENTE = 2L;
@@ -48,38 +51,35 @@ public class MateriaController {
     }
 
     @PostMapping(path = "/newMateria")
-    public ResponseEntity<?> altaMateriaa(HttpServletRequest request, @CurrentUser UserDetails user,
-                                          @RequestBody Materia materia,@RequestParam("fecha")  Date fecha) throws Exception {
-        if(user.getTipoUsuario().getId()==ADMINISTRATIVO) {
-            Materia materiaResponse = materiaService.bindProperties(materia,user,fecha);
-            return new ResponseEntity<Materia>(materiaResponse, HttpStatus.OK);
-        }
+    public ResponseEntity<?> altaMateriaa(@RequestBody Materia materia,@RequestParam("fecha")  String fecha) throws Exception {
+            Date date =  sdf.parse(fecha);
+        try {
+                Materia materiaResponse = materiaService.bindProperties(materia, date);
+                return new ResponseEntity<Materia>(materiaResponse, HttpStatus.OK);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping(path = "/updateMateria")
-    public ResponseEntity<?> modificacionMateria(@RequestBody Materia materia,@CurrentUser UserDetails user,
-                                                    @RequestParam("fecha")  Date fecha) throws Exception{
+    public ResponseEntity<?> modificacionMateria(@RequestBody Materia materia) throws Exception{
         Materia materiaResponse = materiaService.findById(materia.getId());
         if(Objects.isNull(materiaResponse)){
             LOGGER.error(HttpStatus.NOT_FOUND);
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         MateriaDto materiaDto = new MateriaDto(materiaResponse);
-        materiaService.updateMateria(materia,user);
+        materiaService.updateMateria(materia);
         return new ResponseEntity<MateriaDto>(materiaDto,HttpStatus.OK);
     }
 
-
+//lala
     @DeleteMapping(path = "/materia/{id}")
-    public ResponseEntity<?> bajaMateria(HttpServletRequest request, @CurrentUser UserDetails user,
-                                         @PathVariable("id") Long id) throws Exception {
-        if(user.getTipoUsuario().getId()==ADMINISTRATIVO) {
+    public ResponseEntity<?> bajaMateria(@PathVariable("id") Long id) throws Exception {
             Materia mObject = materiaService.findById(id);
             materiaService.bajaMateria(mObject);
             return new ResponseEntity<Void>(HttpStatus.OK);
-        }
-        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
 }

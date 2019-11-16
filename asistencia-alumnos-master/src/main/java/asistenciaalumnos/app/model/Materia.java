@@ -19,7 +19,7 @@ public class Materia extends Auditable<String>{
     private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ESTADO", nullable = false)
+    @JoinColumn(name = "ID_ESTADO", nullable = true)
     private Estado estado;
 
     @PrePersist
