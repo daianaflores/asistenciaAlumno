@@ -18,31 +18,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.service.AlumnoService;
 
 @RestController
-@CrossOrigin(origins = "*", 
-             methods= {RequestMethod.GET, 
-                       RequestMethod.POST,
-                       RequestMethod.PUT,
-                       RequestMethod.DELETE})
-public class AlumnoController{
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.DELETE })
+public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
 
     private static final Long ADMINISTRATIVO = 1L;
     private static final Long DOCENTE = 2L;
 
-    //ejemplo instanciar logger
-    private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
-
+    // ejemplo instanciar logger
+    private static final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
 
     @GetMapping(path = "/")
-    public String hello() throws Exception 
-    {
-        //ejemplos de loggeo
+    public String hello() throws Exception {
+        // ejemplos de loggeo
         LOGGER.debug("Debugging log");
         LOGGER.info("Info log");
         LOGGER.warn("Hey, This is a warning!");
@@ -59,7 +55,7 @@ public class AlumnoController{
         try {
             alumnos = alumnoService.getAlumnos();
         } catch (Exception ex) {
-            //ejemplo de implementación
+            // ejemplo de implementación
             LOGGER.error(HttpStatus.INTERNAL_SERVER_ERROR);
             ex.printStackTrace();
             return new ResponseEntity<List<AlumnoDto>>(alumnos, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,17 +64,21 @@ public class AlumnoController{
     }
 
     @PostMapping(path = "/alumnos")
-    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno, @CurrentUser UserDetails user) throws Exception{
-        if(user.getTipoUsuario().getId() == ADMINISTRATIVO){
+    public ResponseEntity<?> altaAlumno(@RequestBody Alumno alumno 
+        // @CurrentUser UserDetails 
+    // @RequestParam String userId
+    ) throws Exception{
+        // if(user.getTipoUsuario().getId() == ADMINISTRATIVO){
+            // if(userId == ADMINISTRATIVO){
             Alumno alumnoResponse = alumnoService.altaAlumno(alumno);
             AlumnoDto alumnoDto = new AlumnoDto(alumno);
             return new ResponseEntity<AlumnoDto>(alumnoDto, HttpStatus.OK);
-        }
-        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+        // }
+        // return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
     @PutMapping(path = "/alumnos")
-    public ResponseEntity<?> modificacionAlumno(@RequestBody Alumno alumno) throws Exception{
+    public ResponseEntity<?> modificacionAlumno(@RequestBody Alumno alumno) throws Exception {
         Alumno alumnoResponse = alumnoService.modificacionAlumno(alumno);
         AlumnoDto alumnoDto = new AlumnoDto(alumnoResponse);
         if (alumnoResponse == null) {
@@ -91,7 +91,7 @@ public class AlumnoController{
     public ResponseEntity<?> bajaAlumno(@PathVariable("id") Long id) throws Exception {
         try {
             alumnoService.bajaAlumno(id);
-        }catch(Exception e){
+        } catch (Exception e) {
             LOGGER.error(e);
             e.printStackTrace();
         }

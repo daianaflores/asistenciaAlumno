@@ -32,16 +32,16 @@ public class Alumno extends Auditable<String>{
 	private Long DNI;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_ESTADO", nullable = false)
+	@JoinColumn(name = "ID_ESTADO", nullable = true)
 	private Estado estado;
 
 	@OneToOne(orphanRemoval=true)
-	@JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID")
+	@JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID", nullable = true)
 	private Contacto contacto;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "ID_CURSADA", nullable = false)
-	private Cursada cursada;
+	// @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	// @JoinColumn(name = "ID_CURSADA", nullable = true)
+	// private Cursada cursada;
 
 	@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<AsistenciaAlumno> asistenciaAlumnos;
@@ -126,13 +126,13 @@ public class Alumno extends Auditable<String>{
 		this.contacto = contacto;
 	}
 
-	public Cursada getCursada() {
-		return cursada;
-	}
+	// public Cursada getCursada() {
+	// 	return cursada;
+	// }
 
-	public void setCursada(Cursada cursada) {
-		this.cursada = cursada;
-	}
+	// public void setCursada(Cursada cursada) {
+	// 	this.cursada = cursada;
+	// }
 
 	public Set<AsistenciaAlumno> getAsistenciaAlumnos() {
 		return asistenciaAlumnos;

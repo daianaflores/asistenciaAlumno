@@ -10,7 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 public interface AsistenciaRepository extends JpaRepository<Asistencia, Long> {
-    @Query("SELECT a FROM Asistencia join fetch Cursada c  WHERE c.id = :cursadaId and a.fecha = :fecha")
+    @Query("SELECT a FROM Asistencia a join fetch Cursada c  WHERE c.id = :cursadaId and a.fecha = :fecha")
     List<Asistencia> findAsistenciasByFechaAndCursada(@Param("cursadaId") Long cursadaId,
                                                       @Param("fecha") Date fecha);
+
+
+                                                    
 }

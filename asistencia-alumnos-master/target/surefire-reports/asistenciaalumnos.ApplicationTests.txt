@@ -1,4 +1,23 @@
 -------------------------------------------------------------------------------
 Test set: asistenciaalumnos.ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.795 s - in asistenciaalumnos.ApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 3.935 s <<< FAILURE! - in asistenciaalumnos.ApplicationTests
+contextLoads(asistenciaalumnos.ApplicationTests)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asistenciasController': Unsatisfied dependency expressed through field 'asistenciaService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asistenciaServiceImpl': Unsatisfied dependency expressed through field 'asistenciaRepository'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'asistenciaRepository': Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List asistenciaalumnos.app.repository.AsistenciaRepository.findAsistenciasByFechaAndCursada(java.lang.Long,java.util.Date)!
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'asistenciaServiceImpl': Unsatisfied dependency expressed through field 'asistenciaRepository'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'asistenciaRepository': Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List asistenciaalumnos.app.repository.AsistenciaRepository.findAsistenciasByFechaAndCursada(java.lang.Long,java.util.Date)!
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'asistenciaRepository': Invocation of init method failed; nested exception is java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List asistenciaalumnos.app.repository.AsistenciaRepository.findAsistenciasByFechaAndCursada(java.lang.Long,java.util.Date)!
+Caused by: java.lang.IllegalArgumentException: Validation failed for query for method public abstract java.util.List asistenciaalumnos.app.repository.AsistenciaRepository.findAsistenciasByFechaAndCursada(java.lang.Long,java.util.Date)!
+Caused by: java.lang.IllegalArgumentException: 
+org.hibernate.QueryException: No data type for node: org.hibernate.hql.internal.ast.tree.IdentNode 
+ \-[IDENT] IdentNode: 'a' {originalText=a}
+ [SELECT a FROM asistenciaalumnos.app.model.Asistencia join fetch Cursada c  WHERE c.id = :cursadaId and a.fecha = :fecha]
+Caused by: org.hibernate.QueryException: 
+No data type for node: org.hibernate.hql.internal.ast.tree.IdentNode 
+ \-[IDENT] IdentNode: 'a' {originalText=a}
+ [SELECT a FROM asistenciaalumnos.app.model.Asistencia join fetch Cursada c  WHERE c.id = :cursadaId and a.fecha = :fecha]
+Caused by: org.hibernate.QueryException: 
+No data type for node: org.hibernate.hql.internal.ast.tree.IdentNode 
+ \-[IDENT] IdentNode: 'a' {originalText=a}
+
+
