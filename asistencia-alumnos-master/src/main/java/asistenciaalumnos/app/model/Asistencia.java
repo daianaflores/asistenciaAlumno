@@ -25,8 +25,8 @@ public class Asistencia extends Auditable<String>{
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
 
-    @OneToMany(mappedBy = "asistencia",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<AsistenciaAlumno> asistenciaAlumnos;
+/*    @OneToMany(mappedBy = "asistencia",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<AsistenciaAlumno> asistenciaAlumnos;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ESTADO", nullable = false)
@@ -72,13 +72,13 @@ public class Asistencia extends Auditable<String>{
         this.fecha = fecha;
     }
 
-    public Set<AsistenciaAlumno> getAsistenciaAlumnos() {
+/*    public Set<AsistenciaAlumno> getAsistenciaAlumnos() {
         return asistenciaAlumnos;
     }
 
     public void setAsistenciaAlumnos(Set<AsistenciaAlumno> asistenciaAlumnos) {
         this.asistenciaAlumnos = asistenciaAlumnos;
-    }
+    }*/
 
     public Estado getEstado() {
         return estado;

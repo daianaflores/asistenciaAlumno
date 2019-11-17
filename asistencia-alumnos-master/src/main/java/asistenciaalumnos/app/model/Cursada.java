@@ -17,27 +17,27 @@ public class Cursada extends Auditable<String>{
     private Long id;
 
     @OneToOne(orphanRemoval=true)
-    @JoinColumn(name = "ID_MATERIA", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_MATERIA", referencedColumnName = "ID",nullable = true)
     private Materia materia;
 
 
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinTable(
-            name="CURSADA_ALUMNO",
-            joinColumns=@JoinColumn(name="ID_CURSADA", referencedColumnName="ID"),
-            inverseJoinColumns=@JoinColumn(name="ID_ALUMNO", referencedColumnName="MATRICULA"))
-    private Set<Alumno> alumnos;
+    //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    //@JoinTable(
+    //        name="CURSADA_ALUMNO",
+    //        joinColumns=@JoinColumn(name="ID_CURSADA", referencedColumnName="ID"),
+    //        inverseJoinColumns=@JoinColumn(name="ID_ALUMNO", referencedColumnName="MATRICULA"))
+    //private Set<Alumno> alumnos;
 
 
 
     //va a tabla tipo Docente o Usuario? no se entiende el script de DB
     @OneToOne(orphanRemoval=true)
-    @JoinColumn(name = "ID_DOCENTE", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_DOCENTE", referencedColumnName = "ID" ,nullable = true)
     private Docente docente;
 
     @OneToOne(orphanRemoval=true)
-    @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID")
+    @JoinColumn(name = "ID_ESTADO", referencedColumnName = "ID", nullable = true)
     private Estado estado;
 
     @Column(name = "ANIO", nullable = false)
@@ -67,13 +67,9 @@ public class Cursada extends Auditable<String>{
         this.materia = materia;
     }
 
-    public Set<Alumno> getAlumnos() {
-        return alumnos;
-    }
+    //public Set<Alumno> getAlumnos() {return alumnos;}
 
-    public void setAlumnos(Set<Alumno> alumno) {
-        this.alumnos = alumno;
-    }
+    //public void setAlumnos(Set<Alumno> alumno) {this.alumnos = alumno;}
 
     public Docente getDocente() {
         return docente;

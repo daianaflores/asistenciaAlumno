@@ -1,8 +1,7 @@
 package asistenciaalumnos.app.controller;
 
 
-import asistenciaalumnos.app.configs.CurrentUser;
-import asistenciaalumnos.app.configs.UserDetails;
+
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.CursadaDto;
 import asistenciaalumnos.app.service.CursadaService;
@@ -13,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,14 +29,15 @@ public class CursadaController {
     @Autowired
     CursadaService cursadaService;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
     private static final Long ADMINISTRATIVO = 1L;
     private static final Long DOCENTE = 2L;
 
     private static  final Logger LOGGER = LogManager.getLogger(CursadaController.class);
 
     @GetMapping(path = "/cursadas")
-    public ResponseEntity<?> cursadas() throws Exception
-    {
+    public ResponseEntity<?> cursadas() throws Exception{
         List<CursadaDto> cursadas = new ArrayList<CursadaDto>();
         try {
             cursadas = cursadaService.findAll();
@@ -50,8 +50,7 @@ public class CursadaController {
     }
 
     @PutMapping(path = "/updateCursada")
-    public ResponseEntity<?> modificacionCursada(HttpServletRequest request, @CurrentUser UserDetails user,
-                                                 @RequestParam("cursada")Cursada cursada,
+    public ResponseEntity<?> modificacionCursada(@RequestBody Cursada cursada,
                                                  @RequestParam("fecha") Date fecha  ) throws Exception {
         Cursada cursadaResponse = cursadaService.findById(cursada.getId());
         if(Objects.isNull(cursadaResponse)){
@@ -59,21 +58,18 @@ public class CursadaController {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         CursadaDto cursadaDto = new CursadaDto(cursadaResponse);
-        cursadaService.updateCursada(cursada,user);
+        cursadaService.updateCursada(cursada,"logged usser");
         return new ResponseEntity<CursadaDto>(cursadaDto,HttpStatus.OK);
     }
 
 
     @PostMapping(path = "/newCursada")
-    public ResponseEntity<?> altaCursada(HttpServletRequest request, @CurrentUser UserDetails user,
-                                         @RequestParam("cursada")Cursada cursada,
-                                         @RequestParam("fecha") Date fecha  ) throws Exception {
-        if(user.getTipoUsuario().getId()==ADMINISTRATIVO) {
-            Cursada cursadaResponse = cursadaService.bindProperties(cursada, user, fecha);
+    public ResponseEntity<?> altaCursada(@RequestBody Cursada cursada,
+                                         @RequestParam("fecha") String fecha ) throws Exception {
+            Date date =  sdf.parse(fecha);
+            Cursada cursadaResponse = cursadaService.newCursada(cursada, "logged usser", date);
             CursadaDto cursadaDto = new CursadaDto(cursadaResponse);
             return new ResponseEntity<CursadaDto>(cursadaDto, HttpStatus.OK);
-        }
-        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
     }
 
 

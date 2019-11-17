@@ -1,7 +1,6 @@
 package asistenciaalumnos.app.controller;
 
-import asistenciaalumnos.app.configs.CurrentUser;
-import asistenciaalumnos.app.configs.UserDetails;
+
 import asistenciaalumnos.app.model.DTO.MateriaDto;
 import asistenciaalumnos.app.model.Materia;
 import asistenciaalumnos.app.service.MateriaService;
@@ -35,7 +34,7 @@ public class MateriaController {
     private static final Long ADMINISTRATIVO = 1L;
     private static final Long DOCENTE = 2L;
 
-    private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
+    private static  final Logger LOGGER = LogManager.getLogger(MateriaController.class);
 
     @GetMapping(path = "/materias")
     public ResponseEntity<?> materias() throws Exception{

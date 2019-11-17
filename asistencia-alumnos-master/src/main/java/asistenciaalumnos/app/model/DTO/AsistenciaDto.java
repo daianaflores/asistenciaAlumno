@@ -27,10 +27,12 @@ public class AsistenciaDto {
 
     public Date getFecha(){return this.asistencia.getFecha();}
 
+/*
     public List<AsistenciaAlumnoDto> getAsitenciaAlumno(){
         Set<AsistenciaAlumno> asistenciaAlumnoSet = this.asistencia.getAsistenciaAlumnos();
        return asistenciaAlumnoSet.stream().map(it -> {return new AsistenciaAlumnoDto(it); }).collect(Collectors.toList());
     }
+*/
 
 
 /*

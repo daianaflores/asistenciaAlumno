@@ -16,9 +16,9 @@ public interface AsistenciaService {
 
     //Asistencia tomaAsistencia(Asistencia asistencia) throws Exception;
 
-    Asistencia modificacionAsistencia(Asistencia asistencia,UserDetails user,Date fecha) throws Exception ;
+    Asistencia modificacionAsistencia(Asistencia asistencia,Date fecha) throws Exception ;
 
-    Asistencia altaAsistencia (Cursada cursada, List<Alumno> alumnoList, Date fecha, UserDetails user) throws  Exception ;
+    Asistencia altaAsistencia (Cursada cursada, List<Alumno> alumnoList, Date fecha) throws  Exception ;
 
     void bajaAsistencia(Asistencia asistencia) throws Exception;
 

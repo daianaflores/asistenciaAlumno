@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
-import asistenciaalumnos.app.model.AsistenciaAlumno;
+
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
 import asistenciaalumnos.app.service.AsistenciaService;
@@ -44,20 +44,20 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     //seguir desarrollando -->se debería poder modificar los presentes una vez grabados?
-    public Asistencia modificacionAsistencia(Asistencia asistencia,UserDetails user,Date fecha) throws Exception{
+    public Asistencia modificacionAsistencia(Asistencia asistencia,Date fecha) throws Exception{
         Asistencia asistenciaDB = findById(asistencia.getId());
         mergeObjects(asistenciaDB,asistencia);
-        bindProperties(asistencia,user,fecha);
+        bindProperties(asistencia,fecha);
         save(asistenciaDB);
         return asistenciaDB;
     }
 
     @Override
     //creo nuevo objeto asiatencia con lo q me llega del front end --revisar probar funcionamiento
-    public Asistencia altaAsistencia(Cursada cursada, List<Alumno> alumnoList, Date fecha, UserDetails user) throws Exception {
+    public Asistencia altaAsistencia(Cursada cursada, List<Alumno> alumnoList, Date fecha ) throws Exception {
         Asistencia aObject = new Asistencia();
-        aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList));
-        bindProperties(aObject,user,fecha);
+       // aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList));
+        bindProperties(aObject,fecha);
         save(aObject);
         return aObject;
     }
@@ -90,7 +90,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         }
     }
 
-    public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject,List<Alumno> alumnoList){
+/*    public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject,List<Alumno> alumnoList){
         Set<AsistenciaAlumno> set = new HashSet<>();
         for(Alumno alumno: alumnoList){
             AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno();
@@ -100,13 +100,13 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
             set.add(asistenciaAlumno);
         }
         return set;
-    }
+    }*/
 
-    public Asistencia bindProperties(Asistencia aObject, UserDetails user, Date currentDate){
+    public Asistencia bindProperties(Asistencia aObject, Date currentDate){
         if(aObject.getId() != null ){
-            aObject.setAuditableUpdate(currentDate,user.getUsername());
+            aObject.setAuditableUpdate(currentDate,"logged usser");
         }else{
-            aObject.setAuditable(currentDate,user.getUsername());
+            aObject.setAuditable(currentDate,"logged usser");
         }
         return aObject;
     }
@@ -115,7 +115,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         asistenciaDb.setEstado(aObject.getEstado());
         asistenciaDb.setCursada(aObject.getCursada());
         asistenciaDb.setFecha(aObject.getFecha());
-        asistenciaDb.setAsistenciaAlumnos(aObject.getAsistenciaAlumnos());
+       // asistenciaDb.setAsistenciaAlumnos(aObject.getAsistenciaAlumnos());
         return asistenciaDb;
     }
 }

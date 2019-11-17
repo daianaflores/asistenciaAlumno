@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import asistenciaalumnos.app.configs.CurrentUser;
-import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
@@ -32,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class AsistenciasController {
 
-    private static  final Logger LOGGER = LogManager.getLogger(AlumnoController.class);
+    private static  final Logger LOGGER = LogManager.getLogger(AsistenciasController.class);
 
     @Autowired
     AsistenciaService asistenciaService;
@@ -57,8 +55,7 @@ public class AsistenciasController {
     }
 
     @GetMapping(path = "/findAsistencias")
-    public ResponseEntity<?> findAsistencias(HttpServletRequest request, @CurrentUser UserDetails user,
-                                             @RequestParam("fecha")  Date fecha,
+    public ResponseEntity<?> findAsistencias(@RequestParam("fecha")  Date fecha,
                                              @RequestParam("cursada")Cursada cursada) throws Exception{
         List<AsistenciaDto> asistencias = asistenciaService.findAsistenciasByFechaAndCursada(cursada,fecha);
         return new ResponseEntity<List<AsistenciaDto>>(asistencias, HttpStatus.OK);
@@ -66,27 +63,24 @@ public class AsistenciasController {
 
     //grabar la asistencia
     @PostMapping(path = "/newAssistance")
-    public ResponseEntity<?> takeAssistance(HttpServletRequest request, @CurrentUser UserDetails user,
-                           @RequestParam("cursada")Cursada cursada,@RequestParam("alumnoList")List<Alumno> alumnoList,
+    public ResponseEntity<?> takeAssistance(@RequestParam("cursada")Cursada cursada,@RequestParam("alumnoList")List<Alumno> alumnoList,
                            @RequestParam("fecha")  Date fecha )  throws Exception {
-        if(user.getTipoUsuario().getId()==DOCENTE) {
-            Asistencia asistenciaResponse = asistenciaService.altaAsistencia(cursada, alumnoList, fecha, user);
+
+            Asistencia asistenciaResponse = asistenciaService.altaAsistencia(cursada, alumnoList, fecha);
             return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
-        }
-        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+
     }
 
     @PutMapping(path = "/updateAssistance")
-    public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia,@CurrentUser UserDetails user,
+    public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia,
                                                     @RequestParam("fecha")  Date fecha) throws Exception{
-        if(user.getTipoUsuario().getId() == ADMINISTRATIVO) {
-            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, user, fecha);
+
+            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, fecha);
             if (asistenciaResponse == null) {
                 return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
+
         }
-        return new ResponseEntity<Void>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/asistencia/{id}")

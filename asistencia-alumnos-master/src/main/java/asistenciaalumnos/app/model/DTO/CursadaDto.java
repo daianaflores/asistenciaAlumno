@@ -18,16 +18,13 @@ public class CursadaDto {
 
     public Long getId(){return this.cursada.getId();}
 
-    public List<AlumnoDto> getAlumno(){
-        Set<Alumno> aList = this.cursada.getAlumnos();
-        return  aList.stream().map(it -> { return new AlumnoDto(it); }).collect(Collectors.toList());
-    }
 
-    public MateriaDto getMateria(){return new MateriaDto(this.cursada.getMateria());}
 
-    public DocenteDto getDocente(){return new DocenteDto(this.cursada.getDocente());}
+    //public MateriaDto getMateria(){return new MateriaDto(this.cursada.getMateria());}
 
-    public EstadoDto getEstado(){return  new EstadoDto(this.cursada.getEstado());}
+    //public DocenteDto getDocente(){return new DocenteDto(this.cursada.getDocente());}
+
+   // public EstadoDto getEstado(){return  new EstadoDto(this.cursada.getEstado());}
 
     public Integer getYear(){return this.cursada.getYear();}
 
