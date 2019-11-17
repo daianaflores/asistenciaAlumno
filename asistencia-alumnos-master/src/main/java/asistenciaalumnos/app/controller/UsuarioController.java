@@ -77,7 +77,7 @@ public class UsuarioController {
     //service devuelve int no instancia de usuario
     @PostMapping(path = "/usuarios")
     public ResponseEntity<?> altaUsuario(@RequestBody Usuario usuario) throws Exception{
-        Integer usuarioResponse = usuarioService.altaUsuario(usuario);
+        Usuario usuarioResponse = usuarioService.altaUsuario(usuario);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -85,11 +85,9 @@ public class UsuarioController {
 
     //metodo modificado según service
     @PutMapping(path = "/usuarios")
-    public ResponseEntity<?> modificacionUsuario(@RequestBody Usuario usuario) throws Exception
-    {
-        Integer suarioResponse = usuarioService.modificacionUsuario(usuario);
-        if (suarioResponse == null)
-        {
+    public ResponseEntity<?> modificacionUsuario(@RequestBody Usuario usuario) throws Exception{
+        Usuario suarioResponse = usuarioService.modificacionUsuario(usuario);
+        if (suarioResponse == null){
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
@@ -97,7 +95,9 @@ public class UsuarioController {
 
     @DeleteMapping(path = "/usuarios/{id}")
     public ResponseEntity<?> bajaUsuario(@PathVariable("id") Long id) throws Exception{
-        usuarioService.bajaUsuario(id);
+        Usuario uObject = usuarioServiceImpl.findById(id);
+        usuarioService.bajaUsuario(uObject);
         return new ResponseEntity<Void>(HttpStatus.OK);
+
     }
 }

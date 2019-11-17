@@ -1,29 +1,51 @@
 package asistenciaalumnos.app.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+@Entity
+@Table(name = "USUARIO")
 public class Usuario extends Auditable<String> {
 
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
     private Long id ;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_TIPO_USUARIO", nullable = true)
     private TipoUsuario tipoUsuario;
 
+    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
+    @Column(name = "apellido", length = 100, nullable = false)
     private String apellido;
 
+    @Column(name = "DNI", nullable = false)
     private Long dni;
 
+    @Column(name = "fechaNacimiento", nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaDeNacimiento;
 
+    @Column(name = "LEGAJO", nullable = false)
     private Long legajo;
 
+    @Column(name = "USUARIO",length = 100, nullable = false)
     private String usser;
 
+    @Column(name = "CONTRASEÑA", length = 100, nullable = false)
     private String password;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESTADO", nullable = true)
     private Estado estado;
 
+    @OneToOne(orphanRemoval=true)
+    @JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID", nullable = true)
     private Contacto contacto;
 
     public Long getId() {

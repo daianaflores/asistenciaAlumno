@@ -74,12 +74,11 @@ public class MateriaController {
         return new ResponseEntity<MateriaDto>(materiaDto,HttpStatus.OK);
     }
 
-//lala
+
     @DeleteMapping(path = "/materia/{id}")
     public ResponseEntity<?> bajaMateria(@PathVariable("id") Long id) throws Exception {
             Materia mObject = materiaService.findById(id);
             materiaService.bajaMateria(mObject);
             return new ResponseEntity<Void>(HttpStatus.OK);
     }
-
 }

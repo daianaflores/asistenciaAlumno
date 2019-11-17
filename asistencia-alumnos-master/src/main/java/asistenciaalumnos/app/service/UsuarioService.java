@@ -12,11 +12,11 @@ public interface  UsuarioService {
 
     List<UsuarioDto> getUsuarios() throws Exception;
 
-    int altaUsuario(Usuario usuario) throws Exception;
+    Usuario altaUsuario(Usuario usuario) throws Exception;
 
-    int modificacionUsuario(Usuario Usuario) throws Exception ;
+    Usuario modificacionUsuario(Usuario Usuario) throws Exception ;
 
-    int bajaUsuario(Long id) throws Exception;
+    void bajaUsuario(Usuario Usuario) throws Exception;
 
 
 }

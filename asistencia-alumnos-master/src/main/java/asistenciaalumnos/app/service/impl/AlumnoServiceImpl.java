@@ -54,12 +54,9 @@ public class AlumnoServiceImpl implements AlumnoService
     }
 
     @Override
-    public Alumno modificacionAlumno(Alumno alumno) throws Exception 
-    {
+    public Alumno modificacionAlumno(Alumno alumno) throws Exception {
         boolean alumnoExist = alumnoRepository.existsById(alumno.getId());
-        Optional<Alumno> lala = alumnoRepository.findById(alumno.getId());
-        if (!alumnoExist)
-        {
+        if (!alumnoExist){
             return null;
         }
         Alumno alumnoResponse = alumnoRepository.saveAndFlush(alumno);
@@ -67,8 +64,7 @@ public class AlumnoServiceImpl implements AlumnoService
     }
 
     @Override
-    public void bajaAlumno(Long id) throws Exception 
-    {
+    public void bajaAlumno(Long id) throws Exception  {
         alumnoRepository.deleteById(id);
     }
 
