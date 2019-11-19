@@ -1,7 +1,8 @@
 package asistenciaalumnos.app.Dao;
 
-import asistenciaalumnos.app.model.*;
-import asistenciaalumnos.app.repository.TipoUsuarioRepository;
+import asistenciaalumnos.app.model.Administrativo;
+import asistenciaalumnos.app.model.Docente;
+import asistenciaalumnos.app.model.Usuario;
 import asistenciaalumnos.app.service.ContactoService;
 import asistenciaalumnos.app.service.EstadoService;
 import asistenciaalumnos.app.service.TipoUsuarioService;

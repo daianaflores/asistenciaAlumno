@@ -1,8 +1,8 @@
 package asistenciaalumnos.app.model;
 
 import javax.persistence.*;
-
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -20,16 +20,8 @@ public class Cursada extends Auditable<String>{
     @JoinColumn(name = "ID_MATERIA", referencedColumnName = "ID",nullable = true)
     private Materia materia;
 
-
-
-    //@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    //@JoinTable(
-    //        name="CURSADA_ALUMNO",
-    //        joinColumns=@JoinColumn(name="ID_CURSADA", referencedColumnName="ID"),
-    //        inverseJoinColumns=@JoinColumn(name="ID_ALUMNO", referencedColumnName="MATRICULA"))
-    //private Set<Alumno> alumnos;
-
-
+    @ManyToMany(mappedBy = "cursadaAlumnos")
+    private Set<Alumno> cursadaAlumnos = new HashSet<>();
 
     //va a tabla tipo Docente o Usuario? no se entiende el script de DB
     @OneToOne(orphanRemoval=true)
@@ -67,9 +59,13 @@ public class Cursada extends Auditable<String>{
         this.materia = materia;
     }
 
-    //public Set<Alumno> getAlumnos() {return alumnos;}
+    public Set<Alumno> getCursadaAlumnos() {
+        return cursadaAlumnos;
+    }
 
-    //public void setAlumnos(Set<Alumno> alumno) {this.alumnos = alumno;}
+    public void setCursadaAlumnos(Set<Alumno> cursadaAlumnos) {
+        this.cursadaAlumnos = cursadaAlumnos;
+    }
 
     public Docente getDocente() {
         return docente;
@@ -101,5 +97,27 @@ public class Cursada extends Auditable<String>{
 
     public void setCuatrimestre(Integer cuatrimestre) {
         this.cuatrimestre = cuatrimestre;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Cursada))
+            return false;
+        Cursada other = (Cursada) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 }

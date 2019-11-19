@@ -1,20 +1,19 @@
 package asistenciaalumnos.app.service.impl;
 
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
-
+import asistenciaalumnos.app.model.Asistencia;
+import asistenciaalumnos.app.model.AsistenciaAlumno;
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
+import asistenciaalumnos.app.repository.AsistenciaRepository;
 import asistenciaalumnos.app.service.AsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import asistenciaalumnos.app.model.Asistencia;
-import asistenciaalumnos.app.repository.AsistenciaRepository;
+
 import javax.transaction.Transactional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -54,9 +53,9 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     //creo nuevo objeto asiatencia con lo q me llega del front end --revisar probar funcionamiento
-    public Asistencia altaAsistencia(Cursada cursada, List<Alumno> alumnoList, Date fecha ) throws Exception {
-        Asistencia aObject = new Asistencia();
-       // aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList));
+    public Asistencia altaAsistencia(Asistencia asistencia, List<Alumno> alumnoList, Date fecha ) throws Exception {
+        Asistencia aObject = asistencia;
+       aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList));
         bindProperties(aObject,fecha);
         save(aObject);
         return aObject;
@@ -90,7 +89,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         }
     }
 
-/*    public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject,List<Alumno> alumnoList){
+    public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject, List<Alumno> alumnoList){
         Set<AsistenciaAlumno> set = new HashSet<>();
         for(Alumno alumno: alumnoList){
             AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno();
@@ -100,7 +99,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
             set.add(asistenciaAlumno);
         }
         return set;
-    }*/
+    }
 
     public Asistencia bindProperties(Asistencia aObject, Date currentDate){
         if(aObject.getId() != null ){

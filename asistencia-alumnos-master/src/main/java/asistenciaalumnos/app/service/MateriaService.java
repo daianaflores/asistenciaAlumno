@@ -1,6 +1,5 @@
 package asistenciaalumnos.app.service;
 
-import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.DTO.MateriaDto;
 import asistenciaalumnos.app.model.Materia;
 import asistenciaalumnos.app.repository.MateriaRepository;

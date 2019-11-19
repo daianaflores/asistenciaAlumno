@@ -1,11 +1,13 @@
 package asistenciaalumnos.app.model;
 
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "Alumnos")
@@ -31,7 +33,7 @@ public class Alumno extends Auditable<String>{
 	@Column(name = "DNI", nullable = false)
 	private Long DNI;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_ESTADO", nullable = true)
 	private Estado estado;
 
@@ -39,9 +41,18 @@ public class Alumno extends Auditable<String>{
 	@JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID", nullable = true)
 	private Contacto contacto;
 
-	// @ManyToOne(fetch = FetchType.LAZY, optional = false)
-	// @JoinColumn(name = "ID_CURSADA", nullable = true)
-	// private Cursada cursada;
+/*	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	 @JoinColumn(name = "ID_CURSADA", nullable = true)
+	 private Cursada cursada;*/
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "CursadaAlumno",
+			joinColumns = { @JoinColumn(name = "ID_ALUMNO") },
+			inverseJoinColumns = { @JoinColumn(name = "ID_CURSADA") }
+	)
+	//@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private Set<Cursada> cursadaAlumnos = new HashSet<>();
 
 	@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private Set<AsistenciaAlumno> asistenciaAlumnos;
@@ -126,13 +137,21 @@ public class Alumno extends Auditable<String>{
 		this.contacto = contacto;
 	}
 
-	// public Cursada getCursada() {
-	// 	return cursada;
-	// }
+/*	 public Cursada getCursada() {
+	 	return cursada;
+	 }
 
-	// public void setCursada(Cursada cursada) {
-	// 	this.cursada = cursada;
-	// }
+	 public void setCursada(Cursada cursada) {
+	 	this.cursada = cursada;
+	 }*/
+
+	public Set<Cursada> getCursadaAlumnos() {
+		return cursadaAlumnos;
+	}
+
+	public void setCursadaAlumnos(Set<Cursada> cursadaAlumnos) {
+		this.cursadaAlumnos = cursadaAlumnos;
+	}
 
 	public Set<AsistenciaAlumno> getAsistenciaAlumnos() {
 		return asistenciaAlumnos;
@@ -140,5 +159,27 @@ public class Alumno extends Auditable<String>{
 
 	public void setAsistenciaAlumnos(Set<AsistenciaAlumno> asistenciaAlumnos) {
 		this.asistenciaAlumnos = asistenciaAlumnos;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Alumno))
+			return false;
+		Alumno other = (Alumno) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

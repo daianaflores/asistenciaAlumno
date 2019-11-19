@@ -1,6 +1,5 @@
 package asistenciaalumnos.app.model.DTO;
 
-import asistenciaalumnos.app.model.Estado;
 import asistenciaalumnos.app.model.Materia;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

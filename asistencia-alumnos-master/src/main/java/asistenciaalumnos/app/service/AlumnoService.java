@@ -1,9 +1,9 @@
 package asistenciaalumnos.app.service;
 
-import java.util.List;
-
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.DTO.AlumnoDto;
+
+import java.util.List;
 
 public interface AlumnoService
 {

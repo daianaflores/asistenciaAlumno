@@ -1,13 +1,12 @@
 package asistenciaalumnos.app.service;
 
-import java.util.Date;
-import java.util.List;
-
-import asistenciaalumnos.app.configs.UserDetails;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Asistencia;
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
+
+import java.util.Date;
+import java.util.List;
 
 public interface AsistenciaService {
     String getHello() throws Exception;
@@ -18,7 +17,7 @@ public interface AsistenciaService {
 
     Asistencia modificacionAsistencia(Asistencia asistencia,Date fecha) throws Exception ;
 
-    Asistencia altaAsistencia (Cursada cursada, List<Alumno> alumnoList, Date fecha) throws  Exception ;
+    Asistencia altaAsistencia (Asistencia asistencia, List<Alumno> alumnoList, Date fecha) throws  Exception ;
 
     void bajaAsistencia(Asistencia asistencia) throws Exception;
 

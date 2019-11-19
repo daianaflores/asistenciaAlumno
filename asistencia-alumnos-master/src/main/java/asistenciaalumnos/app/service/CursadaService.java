@@ -1,7 +1,5 @@
 package asistenciaalumnos.app.service;
 
-import asistenciaalumnos.app.configs.UserDetails;
-import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.CursadaDto;
 import asistenciaalumnos.app.repository.CursadaRepository;
@@ -11,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,7 +69,7 @@ public class CursadaService {
     }
 
     public Cursada newCursada(Cursada cObject,String usser,Date fecha){
-        bindProperties(cObject,usser,fecha);
+       // bindProperties(cObject,usser,fecha);
         save(cObject);
         return cObject;
     }

@@ -1,22 +1,28 @@
-package asistenciaalumnos.app.model;
+/*package asistenciaalumnos.app.model;
 
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "TIPO_USUARIO")
-public class TipoUsuario extends Auditable<String>{
+@Table(name = "CursadaAlumno")
+public class CursadaAlumno extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "descripcion", length = 500, nullable = false)
-    private String descripcion;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false,cascade = CascadeType.ALL)
+    @JoinColumn(name="ID_ALUMNO",nullable = false)
+    private Alumno alumno;
+
+    @ManyToOne(fetch = FetchType.LAZY,optional = false,cascade = CascadeType.ALL)
+    @JoinColumn(name="ID_CURSADA",nullable = true)
+    private Cursada cursada;
 
     @PrePersist
     protected void onCreate() {
@@ -29,10 +35,7 @@ public class TipoUsuario extends Auditable<String>{
         this.lastModifiedDate = new Date();
     }
 
-    public TipoUsuario()
-    {
-        super();
-    }
+    public CursadaAlumno(){}
 
     public Long getId() {
         return id;
@@ -42,12 +45,20 @@ public class TipoUsuario extends Auditable<String>{
         this.id = id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
+
+    public Cursada getCursada() {
+        return cursada;
+    }
+
+    public void setCursada(Cursada cursada) {
+        this.cursada = cursada;
     }
 
     @Override
@@ -61,9 +72,9 @@ public class TipoUsuario extends Auditable<String>{
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof TipoUsuario))
+        if (!(obj instanceof CursadaAlumno))
             return false;
-        TipoUsuario other = (TipoUsuario) obj;
+        CursadaAlumno other = (CursadaAlumno) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -72,3 +83,4 @@ public class TipoUsuario extends Auditable<String>{
         return true;
     }
 }
+*/
