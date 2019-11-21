@@ -11,10 +11,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "Alumnos")
+
 public class Alumno extends Auditable<String>{
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "MATRICULA", unique = true, nullable = false)
+	@Column(name = "ID", unique = true, nullable = false)
 	private Long id;
 
 	@Column(name = "nombre", length = 30, nullable = false)
@@ -26,7 +27,7 @@ public class Alumno extends Auditable<String>{
 	@Column(name = "email", length = 100, nullable = false)
 	private String email;
 
-	@Column(name = "fechaNacimiento", nullable = false)
+	@Column(name = "fechaNacimiento", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaNacimiento;
 
@@ -41,21 +42,17 @@ public class Alumno extends Auditable<String>{
 	@JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID", nullable = true)
 	private Contacto contacto;
 
-/*	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
-	 @JoinColumn(name = "ID_CURSADA", nullable = true)
-	 private Cursada cursada;*/
-
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(
 			name = "CursadaAlumno",
 			joinColumns = { @JoinColumn(name = "ID_ALUMNO") },
 			inverseJoinColumns = { @JoinColumn(name = "ID_CURSADA") }
 	)
-	//@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
 	private Set<Cursada> cursadaAlumnos = new HashSet<>();
 
-	@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private Set<AsistenciaAlumno> asistenciaAlumnos;
+	@OneToMany(mappedBy = "alumno",cascade = CascadeType.ALL,fetch = FetchType.LAZY )
+	private Set<AsistenciaAlumno> asistenciaAlumnos = new HashSet<>();
 
 	@PrePersist
 	protected void onCreate() {

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,8 @@ import java.util.List;
 public class AsistenciasController {
 
     private static  final Logger LOGGER = LogManager.getLogger(AsistenciasController.class);
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     AsistenciaService asistenciaService;
@@ -50,24 +53,26 @@ public class AsistenciasController {
     }
 
     @GetMapping(path = "/findAsistencias")
-    public ResponseEntity<?> findAsistencias(@RequestParam("fecha")  Date fecha,
+    public ResponseEntity<?> findAsistencias(@RequestParam("fecha")  String fecha,
                                              @RequestParam("cursada")Cursada cursada) throws Exception{
-        List<AsistenciaDto> asistencias = asistenciaService.findAsistenciasByFechaAndCursada(cursada,fecha);
+        Date date =  sdf.parse(fecha);
+        List<AsistenciaDto> asistencias = asistenciaService.findAsistenciasByFechaAndCursada(cursada,date);
         return new ResponseEntity<List<AsistenciaDto>>(asistencias, HttpStatus.OK);
     }
 
     //grabar la asistencia
-    @PostMapping(path = "/newAssistance")
-    public ResponseEntity<?> takeAssistance(@RequestBody Asistencia asistencia,@RequestParam("alumnoList")List<Alumno> alumnoList,
-                           @RequestParam("fecha")  Date fecha )  throws Exception {
-            Asistencia asistenciaResponse = asistenciaService.altaAsistencia(asistencia, alumnoList, fecha);
+    @PostMapping(path = "/newAsistencia")
+    public ResponseEntity<?> takeAssistance(@RequestBody Asistencia asistencia,@RequestParam("fecha") String fecha )  throws Exception {
+            Date date =  sdf.parse(fecha);
+            Asistencia asistenciaResponse = asistenciaService.altaAsistencia(asistencia, date);
             return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
     }
 
-    @PutMapping(path = "/updateAssistance")
+    @PutMapping(path = "/updateAsistencia")
     public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia,
-                                                    @RequestParam("fecha")  Date fecha) throws Exception{
-            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, fecha);
+                                                    @RequestParam("fecha") String fecha) throws Exception{
+            Date date =  sdf.parse(fecha);
+            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, date);
             if (asistenciaResponse == null) {
                 return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }

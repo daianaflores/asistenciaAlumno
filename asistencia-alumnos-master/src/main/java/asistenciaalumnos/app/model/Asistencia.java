@@ -2,6 +2,7 @@ package asistenciaalumnos.app.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,15 +21,15 @@ public class Asistencia extends Auditable<String>{
     @JoinColumn(name = "ID_CURSADA", referencedColumnName = "ID")
     private Cursada cursada;
 
-    @Column(name = "FECHA", nullable = false)
+    @Column(name = "FECHA", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
 
     @OneToMany(mappedBy = "asistencia",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<AsistenciaAlumno> asistenciaAlumnos;
+    private Set<AsistenciaAlumno> asistenciaAlumnos = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ESTADO", nullable = false)
+    @JoinColumn(name = "ID_ESTADO", nullable = true)
     private Estado estado;
 
     @PrePersist
@@ -86,6 +87,7 @@ public class Asistencia extends Auditable<String>{
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
 
     @Override
     public int hashCode() {

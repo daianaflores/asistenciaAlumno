@@ -6,24 +6,25 @@ import java.util.Objects;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@Entity
+@Entity(name = "AsistenciaAlumno")
 @Table(name = "AsistenciaAlumno")
 public class AsistenciaAlumno extends Auditable<String> {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
-    private Long id;
+   @EmbeddedId
+   private AsistenciaAlumnoId id;
 
     @Column(name = "IS_PRESENT")
-    private Boolean isPresent;
+    private Boolean isPresent = false;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name="ID_ALUMNO",nullable = false)
+    @JoinColumn(name="ID_ALUMNO",referencedColumnName = "ID",nullable = true)
+    @MapsId("alumnoId")
+    //@Column(name = "ID_ALUMNO")
     private Alumno alumno;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name="ID_ASISTENCIA",nullable = false)
+    @JoinColumn(name="ID_ASISTENCIA",referencedColumnName = "ID",nullable = true)
+    @MapsId("asistenciaId")
     private Asistencia asistencia;
 
     @PrePersist
@@ -39,11 +40,17 @@ public class AsistenciaAlumno extends Auditable<String> {
 
     public AsistenciaAlumno(){}
 
-    public Long getId() {
+    public AsistenciaAlumno(Asistencia asistencia, Alumno alumno){
+        this.alumno = alumno;
+        this.asistencia = asistencia;
+        this.id = new AsistenciaAlumnoId(alumno.getId(),asistencia.getId());
+    }
+
+    public AsistenciaAlumnoId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(AsistenciaAlumnoId id) {
         this.id = id;
     }
 
@@ -72,24 +79,19 @@ public class AsistenciaAlumno extends Auditable<String> {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        AsistenciaAlumno that = (AsistenciaAlumno) o;
+        return Objects.equals(alumno, that.alumno) &&
+                Objects.equals(asistencia, that.asistencia);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof AsistenciaAlumno))
-            return false;
-        AsistenciaAlumno other = (AsistenciaAlumno) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+    public int hashCode() {
+        return Objects.hash(alumno, asistencia);
     }
 }

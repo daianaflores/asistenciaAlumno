@@ -9,14 +9,16 @@ public class AsistenciaAlumnoDto {
 
     public AsistenciaAlumnoDto(AsistenciaAlumno asistenciaAlumno){this.asistenciaAlumno = asistenciaAlumno; }
 
-    public Long getId(){return this.asistenciaAlumno.getId();}
+    //public Long getId(){return this.asistenciaAlumno.getId();}
 
-    public AlumnoDto getAlumno(){
-        return new AlumnoDto(this.asistenciaAlumno.getAlumno());
+    public String getAlumno(){
+        return this.asistenciaAlumno.getAlumno().getId() +" "+
+                this.asistenciaAlumno.getAlumno().getNombre() +" "+
+                this.asistenciaAlumno.getAlumno().getApellido();
     }
 
-    public AsistenciaDto getAsistencia(){
-        return new AsistenciaDto(this.asistenciaAlumno.getAsistencia());
+    public String getAsistencia(){
+       return "Asistencia id : " + this.asistenciaAlumno.getAsistencia().getId().toString();
     }
 
     public Boolean getPresent(){return this.asistenciaAlumno.getPresent();}

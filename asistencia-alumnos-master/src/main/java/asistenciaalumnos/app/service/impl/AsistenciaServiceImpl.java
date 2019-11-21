@@ -6,6 +6,7 @@ import asistenciaalumnos.app.model.Asistencia;
 import asistenciaalumnos.app.model.AsistenciaAlumno;
 import asistenciaalumnos.app.model.Cursada;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
+import asistenciaalumnos.app.repository.AsistenciaAlumnoRepository;
 import asistenciaalumnos.app.repository.AsistenciaRepository;
 import asistenciaalumnos.app.service.AsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
 	@Autowired
 	AsistenciaRepository asistenciaRepository;
 
+	@Autowired
+    AsistenciaAlumnoRepository asistenciaAlumnoRepository;
+
 
 	//xq se sigue usando el metodo helloWorld?
     @Override
-    public String getHello() throws Exception
-    {
+    public String getHello() throws Exception    {
         String message = "Hello World from API REST Spring Boot!!";
         return message;
     }
@@ -53,11 +56,22 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     //creo nuevo objeto asiatencia con lo q me llega del front end --revisar probar funcionamiento
-    public Asistencia altaAsistencia(Asistencia asistencia, List<Alumno> alumnoList, Date fecha ) throws Exception {
-        Asistencia aObject = asistencia;
-       aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList));
+    public Asistencia altaAsistencia(Asistencia aObject, Date fecha ) throws Exception {
+        List<Alumno> alumnoList = new ArrayList<>();
+        List<Alumno> ausAlumnoList = new ArrayList<>();
+           for(AsistenciaAlumno a : aObject.getAsistenciaAlumnos()){
+               Alumno it = a.getAlumno();
+               if(a.getPresent() == true) {
+                   alumnoList.add(it);
+               }else{
+                   ausAlumnoList.add(it);
+               }
+           }
+        aObject.setAsistenciaAlumnos(null);
         bindProperties(aObject,fecha);
         save(aObject);
+        //aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList,ausAlumnoList));
+        asistenciaAlumnoRepository.saveAll(createNewAsistenciaAlumno(aObject,alumnoList,ausAlumnoList));
         return aObject;
     }
 
@@ -89,15 +103,19 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         }
     }
 
-    public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject, List<Alumno> alumnoList){
+
+   public Set<AsistenciaAlumno> createNewAsistenciaAlumno(Asistencia aObject, List<Alumno> alumnoList,List<Alumno> ausAlumnoList){
         Set<AsistenciaAlumno> set = new HashSet<>();
         for(Alumno alumno: alumnoList){
-            AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno();
-            asistenciaAlumno.setAlumno(alumno);
-            asistenciaAlumno.setAsistencia(aObject);
-            asistenciaAlumno.setPresent(true);// seteo el valor presente al crearlo //se puede cambiar
+            AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno(aObject,alumno);
+            asistenciaAlumno.setPresent(true);
             set.add(asistenciaAlumno);
         }
+       for(Alumno alumno: ausAlumnoList){
+           AsistenciaAlumno asistenciaAlumno = new AsistenciaAlumno(aObject,alumno);
+           asistenciaAlumno.setPresent(false);
+           set.add(asistenciaAlumno);
+       }
         return set;
     }
 
@@ -114,7 +132,7 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         asistenciaDb.setEstado(aObject.getEstado());
         asistenciaDb.setCursada(aObject.getCursada());
         asistenciaDb.setFecha(aObject.getFecha());
-       // asistenciaDb.setAsistenciaAlumnos(aObject.getAsistenciaAlumnos());
+        asistenciaDb.setAsistenciaAlumnos(aObject.getAsistenciaAlumnos());
         return asistenciaDb;
     }
 }
