@@ -1,7 +1,10 @@
 package asistenciaalumnos.app.model.DTO;
 
 import asistenciaalumnos.app.model.AsistenciaAlumno;
+import asistenciaalumnos.app.model.AsistenciaAlumnoId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Date;
 
 public class AsistenciaAlumnoDto {
     @JsonIgnore
@@ -9,7 +12,7 @@ public class AsistenciaAlumnoDto {
 
     public AsistenciaAlumnoDto(AsistenciaAlumno asistenciaAlumno){this.asistenciaAlumno = asistenciaAlumno; }
 
-    //public Long getId(){return this.asistenciaAlumno.getId();}
+    public AsistenciaAlumnoId getId(){return this.asistenciaAlumno.getId();}
 
     public String getAlumno(){
         return this.asistenciaAlumno.getAlumno().getId() +" "+

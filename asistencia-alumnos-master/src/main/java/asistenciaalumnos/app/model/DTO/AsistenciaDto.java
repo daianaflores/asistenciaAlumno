@@ -23,7 +23,7 @@ public class AsistenciaDto {
 
     public Long getId(){return  this.asistencia.getId();}
 
-    //public CursadaDto getCursada(){return  new CursadaDto(this.asistencia.getCursada());}
+    public CursadaDto getCursada(){return  new CursadaDto(this.asistencia.getCursada());}
 
     public Date getFecha(){return this.asistencia.getFecha();}
 

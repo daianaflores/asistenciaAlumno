@@ -70,7 +70,6 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
         aObject.setAsistenciaAlumnos(null);
         bindProperties(aObject,fecha);
         save(aObject);
-        //aObject.setAsistenciaAlumnos(createNewAsistenciaAlumno(aObject,alumnoList,ausAlumnoList));
         asistenciaAlumnoRepository.saveAll(createNewAsistenciaAlumno(aObject,alumnoList,ausAlumnoList));
         return aObject;
     }
