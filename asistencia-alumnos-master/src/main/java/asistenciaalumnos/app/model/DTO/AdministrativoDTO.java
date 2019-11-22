@@ -37,7 +37,7 @@ public class AdministrativoDTO {
     }
 
     public Date getFechaNacimiento(){
-        return  this.administrativo.getFechaDeNacimiento();
+        return  this.administrativo.getFechaNacimiento();
     }
 
     public Long getLegajo(){

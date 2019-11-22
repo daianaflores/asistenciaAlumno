@@ -3,6 +3,9 @@ package asistenciaalumnos.app.model.DTO;
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Contacto;
 import asistenciaalumnos.app.model.Estado;
+
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class AlumnoDto {
@@ -12,6 +15,8 @@ public class AlumnoDto {
 
     public AlumnoDto(Alumno alumno){this.alumno = alumno;}
 
+    public Long getID(){return this.alumno.getId();}
+    
     public Long getDNI(){return this.alumno.getDNI();}
 
     public String getNombre(){
@@ -27,7 +32,7 @@ public class AlumnoDto {
     }
 
     public Long getMatricula(){
-        return this.alumno.getId();
+        return this.alumno.getMatricula();
     }
 
     public Contacto getContacto(){
@@ -40,6 +45,10 @@ public class AlumnoDto {
 
     public String getEmail(){
         return this.alumno.getEmail();
+    }
+
+    public Date getFechaNacimiento(){
+        return this.alumno.getFechaNacimiento();
     }
 
 }

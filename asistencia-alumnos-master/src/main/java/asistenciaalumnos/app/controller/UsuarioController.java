@@ -22,6 +22,7 @@ import java.util.List;
                 RequestMethod.PUT,
                 RequestMethod.DELETE})
 public class UsuarioController {
+
     @Autowired
     UsuarioService usuarioService;
 
@@ -37,6 +38,7 @@ public class UsuarioController {
         String message = usuarioService.getHello();
         return message;
     }
+
     @GetMapping(path = "/usuarios")
     public ResponseEntity<?> usuarios() throws Exception
     {
@@ -48,8 +50,6 @@ public class UsuarioController {
         }
         return new ResponseEntity<List<UsuarioDto>>(usuarios, HttpStatus.OK);
     }
-
-
 
     @GetMapping(path = "/usuarios/docentes")
     public ResponseEntity<?> docentes() throws Exception {
@@ -77,26 +77,35 @@ public class UsuarioController {
     @PostMapping(path = "/usuarios")
     public ResponseEntity<?> altaUsuario(@RequestBody Usuario usuario) throws Exception{
         Usuario usuarioResponse = usuarioService.altaUsuario(usuario);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Usuario>(usuarioResponse, HttpStatus.OK);
     }
-
-
 
     //metodo modificado según service
     @PutMapping(path = "/usuarios")
     public ResponseEntity<?> modificacionUsuario(@RequestBody Usuario usuario) throws Exception{
-        Usuario suarioResponse = usuarioService.modificacionUsuario(usuario);
-        if (suarioResponse == null){
+        Usuario usuarioResponse = usuarioService.modificacionUsuario(usuario);
+        if (usuarioResponse == null){
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Usuario>(usuarioResponse, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/usuarios/{id}")
+    public ResponseEntity<?> getUsuario(@PathVariable("id") Long id) throws Exception{
+        Usuario uObject = usuarioServiceImpl.findById(id);
+        if (uObject == null){
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Usuario>(uObject, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/usuarios/{id}")
     public ResponseEntity<?> bajaUsuario(@PathVariable("id") Long id) throws Exception{
         Usuario uObject = usuarioServiceImpl.findById(id);
-        usuarioService.bajaUsuario(uObject);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-
+        if (uObject == null){
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        Usuario userPersisted = usuarioService.bajaUsuario(uObject);
+        return new ResponseEntity<Usuario>(userPersisted, HttpStatus.OK);
     }
 }

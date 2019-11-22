@@ -37,7 +37,6 @@ asistenciaalumnos/app/Dao/GenericDAO.class
 asistenciaalumnos/app/repository/CursadaRepository.class
 asistenciaalumnos/app/model/DTO/DocenteDto.class
 asistenciaalumnos/app/model/DTO/AsistenciaAlumnoDto.class
-asistenciaalumnos/app/Dao/AlumnoDAO.class
 asistenciaalumnos/app/repository/AlumnoRepository.class
 asistenciaalumnos/configuracionconeccion/Conexion.class
 asistenciaalumnos/Application.class

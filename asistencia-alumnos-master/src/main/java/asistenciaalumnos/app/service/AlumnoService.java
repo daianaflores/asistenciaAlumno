@@ -9,6 +9,8 @@ public interface AlumnoService
 {
     String getHello() throws Exception;
 
+    public Alumno findById(Long id) throws Exception;
+
     List<AlumnoDto> getAlumnos() throws Exception;
 
     Alumno altaAlumno(Alumno alumno) throws Exception;

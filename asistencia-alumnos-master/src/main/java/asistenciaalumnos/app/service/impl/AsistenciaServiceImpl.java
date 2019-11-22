@@ -1,10 +1,10 @@
 package asistenciaalumnos.app.service.impl;
 
-
 import asistenciaalumnos.app.model.Alumno;
 import asistenciaalumnos.app.model.Asistencia;
 import asistenciaalumnos.app.model.AsistenciaAlumno;
 import asistenciaalumnos.app.model.Cursada;
+import asistenciaalumnos.app.model.Estado;
 import asistenciaalumnos.app.model.DTO.AsistenciaDto;
 import asistenciaalumnos.app.repository.AsistenciaAlumnoRepository;
 import asistenciaalumnos.app.repository.AsistenciaRepository;
@@ -80,8 +80,16 @@ public class  AsistenciaServiceImpl implements AsistenciaService {
 
     @Override
     //hacer borrado logico con seteo de columna en estado 'dado de baja'
-    public void bajaAsistencia(Asistencia aObject) throws Exception {
-        aObject.getEstado().setId(DADO_DE_BAJA);
+    public Asistencia bajaAsistencia(Asistencia aObject) throws Exception {
+        boolean asistenciaExist = asistenciaRepository.existsById(aObject.getId());
+        if (!asistenciaExist) {
+            return null;
+        }
+        Estado estadoBaja = new Estado();
+        estadoBaja.setId(DADO_DE_BAJA);
+        estadoBaja.setDescripcion("DESHABILITADO");
+        aObject.setEstado(estadoBaja);
+        return asistenciaRepository.saveAndFlush(aObject);
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface  UsuarioService {
 
     Usuario modificacionUsuario(Usuario Usuario) throws Exception ;
 
-    void bajaUsuario(Usuario Usuario) throws Exception;
+    Usuario bajaUsuario(Usuario Usuario) throws Exception;
 
 
 }

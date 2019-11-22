@@ -30,7 +30,7 @@ public class Usuario extends Auditable<String> {
 
     @Column(name = "fechaNacimiento", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaDeNacimiento;
+    private Date fechaNacimiento;
 
     @Column(name = "LEGAJO", nullable = false)
     private Long legajo;
@@ -41,7 +41,7 @@ public class Usuario extends Auditable<String> {
     @Column(name = "CONTRASEÑA", length = 100, nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_ESTADO", nullable = true)
     private Estado estado;
 
@@ -81,12 +81,12 @@ public class Usuario extends Auditable<String> {
         this.dni = dni;
     }
 
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Long getLegajo() {

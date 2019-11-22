@@ -62,27 +62,42 @@ public class AsistenciasController {
 
     //grabar la asistencia
     @PostMapping(path = "/newAsistencia")
-    public ResponseEntity<?> takeAssistance(@RequestBody Asistencia asistencia,@RequestParam("fecha") String fecha )  throws Exception {
-            Date date =  sdf.parse(fecha);
-            Asistencia asistenciaResponse = asistenciaService.altaAsistencia(asistencia, date);
-            return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
+    public ResponseEntity<?> takeAssistance(@RequestBody Asistencia asistencia)  throws Exception {
+        Date date =  new Date();
+        Asistencia asistenciaResponse = asistenciaService.altaAsistencia(asistencia, date);
+        AsistenciaDto asistenciaDto = new AsistenciaDto(asistenciaResponse);
+        return new ResponseEntity<AsistenciaDto>(asistenciaDto, HttpStatus.OK);
     }
 
     @PutMapping(path = "/updateAsistencia")
-    public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia,
-                                                    @RequestParam("fecha") String fecha) throws Exception{
-            Date date =  sdf.parse(fecha);
-            Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, date);
-            if (asistenciaResponse == null) {
-                return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> modificacionAsistencia(@RequestBody Asistencia asistencia) throws Exception {
+        Date date =  new Date();
+        Asistencia asistenciaResponse = asistenciaService.modificacionAsistencia(asistencia, date);
+        if (asistenciaResponse == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Asistencia>(asistenciaResponse, HttpStatus.OK);
+        AsistenciaDto asistenciaDto = new AsistenciaDto(asistenciaResponse);
+        return new ResponseEntity<AsistenciaDto>(asistenciaDto, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/asistencia/{id}")
+    public ResponseEntity<?> getAsistencia(@PathVariable("id") Long id) throws Exception {
+        Asistencia aObject = asistenciaServiceImpl.findById(id);
+        if (aObject == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        AsistenciaDto asistenciaDto = new AsistenciaDto(aObject);
+        return new ResponseEntity<AsistenciaDto>(asistenciaDto, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/asistencia/{id}")
     public ResponseEntity<?> bajaAsistencia(@PathVariable("id") Long id) throws Exception {
         Asistencia aObject = asistenciaServiceImpl.findById(id);
-        asistenciaService.bajaAsistencia(aObject);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        if (aObject == null) {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+        Asistencia aPersisted = asistenciaService.bajaAsistencia(aObject);
+        AsistenciaDto asistenciaDto = new AsistenciaDto(aPersisted);
+        return new ResponseEntity<AsistenciaDto>(asistenciaDto, HttpStatus.OK);
     }
 }

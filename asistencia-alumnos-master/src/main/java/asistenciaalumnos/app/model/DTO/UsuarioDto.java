@@ -39,7 +39,7 @@ public class UsuarioDto {
     }
 
     public Date getFechaNacimiento(){
-        return  this.usuario.getFechaDeNacimiento();
+        return  this.usuario.getFechaNacimiento();
     }
 
     public Long getLegajo(){

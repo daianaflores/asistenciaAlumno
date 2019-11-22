@@ -44,7 +44,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
                 usuario.setNombre(rs.getNString("Nombre"));
                 usuario.setApellido(rs.getNString("Apellido"));
                 usuario.setDni(rs.getLong("DNI"));
-                usuario.setFechaDeNacimiento(rs.getDate("Fechanac"));
+                usuario.setFechaNacimiento(rs.getDate("Fechanac"));
                 usuario.setLegajo(rs.getLong("Legajo"));
                 usuario.setUsser(rs.getNString("Usuario"));
                 usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -79,7 +79,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
                 docente.setNombre(rs.getNString("Nombre"));
                 docente.setApellido(rs.getNString("Apellido"));
                 docente.setDni(rs.getLong("DNI"));
-                docente.setFechaDeNacimiento(rs.getDate("Fechanac"));
+                docente.setFechaNacimiento(rs.getDate("Fechanac"));
                 docente.setLegajo(rs.getLong("Legajo"));
                 docente.setUsser(rs.getNString("Usuario"));
                 docente.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -114,7 +114,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
                 administrativo.setNombre(rs.getNString("Nombre"));
                 administrativo.setApellido(rs.getNString("Apellido"));
                 administrativo.setDni(rs.getLong("DNI"));
-                administrativo.setFechaDeNacimiento(rs.getDate("Fechanac"));
+                administrativo.setFechaNacimiento(rs.getDate("Fechanac"));
                 administrativo.setLegajo(rs.getLong("Legajo"));
                 administrativo.setUsser(rs.getNString("Usuario"));
                 administrativo.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -146,7 +146,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
                 usuario.setNombre(rs.getNString("Nombre"));
                 usuario.setApellido(rs.getNString("Apellido"));
                 usuario.setDni(rs.getLong("DNI"));
-                usuario.setFechaDeNacimiento(rs.getDate("Fechanac"));
+                usuario.setFechaNacimiento(rs.getDate("Fechanac"));
                 usuario.setLegajo(rs.getLong("Legajo"));
                 usuario.setUsser(rs.getNString("Usuario"));
                 usuario.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -177,7 +177,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             docente.setNombre(rs.getNString("Nombre"));
             docente.setApellido(rs.getNString("Apellido"));
             docente.setDni(rs.getLong("DNI"));
-            docente.setFechaDeNacimiento(rs.getDate("Fechanac"));
+            docente.setFechaNacimiento(rs.getDate("Fechanac"));
             docente.setLegajo(rs.getLong("Legajo"));
             docente.setUsser(rs.getNString("Usuario"));
             docente.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -208,7 +208,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             administrativo.setNombre(rs.getNString("Nombre"));
             administrativo.setApellido(rs.getNString("Apellido"));
             administrativo.setDni(rs.getLong("DNI"));
-            administrativo.setFechaDeNacimiento(rs.getDate("Fechanac"));
+            administrativo.setFechaNacimiento(rs.getDate("Fechanac"));
             administrativo.setLegajo(rs.getLong("Legajo"));
             administrativo.setUsser(rs.getNString("Usuario"));
             administrativo.setEstado(estadoService.findById(rs.getLong("IdEstado")));
@@ -237,7 +237,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             stmn.setString(3, usuario.getNombre());
             stmn.setString(4, usuario.getApellido());
             stmn.setLong(5, usuario.getDni());
-            stmn.setDate(6, (Date) usuario.getFechaDeNacimiento());
+            stmn.setDate(6, (Date) usuario.getFechaNacimiento());
             stmn.setLong(7, usuario.getLegajo());
             stmn.setString(8, usuario.getUsser());
             stmn.setString(9, usuario.getPassword());
@@ -284,7 +284,7 @@ public class UsuarioDAO implements GenericDAO<Usuario> {
             stmn.setString(3, usuario.getNombre());
             stmn.setString(4, usuario.getApellido());
             stmn.setLong(5, usuario.getDni());
-            stmn.setDate(6, (Date) usuario.getFechaDeNacimiento());
+            stmn.setDate(6, (Date) usuario.getFechaNacimiento());
             stmn.setLong(7, usuario.getLegajo());
             stmn.setString(8, usuario.getUsser());
             stmn.setString(9, usuario.getPassword());

@@ -19,7 +19,7 @@ public interface AsistenciaService {
 
     Asistencia altaAsistencia (Asistencia asistencia, Date fecha) throws  Exception ;
 
-    void bajaAsistencia(Asistencia asistencia) throws Exception;
+    Asistencia bajaAsistencia(Asistencia asistencia) throws Exception;
 
     List<AsistenciaDto> findAsistenciasByFechaAndCursada(Cursada cursada, Date fecha);
 }

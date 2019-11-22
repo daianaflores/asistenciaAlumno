@@ -6,11 +6,13 @@ import asistenciaalumnos.app.model.DTO.AdministrativoDTO;
 import asistenciaalumnos.app.model.DTO.DocenteDto;
 import asistenciaalumnos.app.model.DTO.UsuarioDto;
 import asistenciaalumnos.app.model.Docente;
+import asistenciaalumnos.app.model.Estado;
 import asistenciaalumnos.app.model.Usuario;
 import asistenciaalumnos.app.repository.UsuarioRepository;
 import asistenciaalumnos.app.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.tags.EvalTag;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,8 +83,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void bajaUsuario(Usuario uObject) throws Exception{
-        uObject.getEstado().setId(DADO_DE_BAJA);
+    public Usuario bajaUsuario(Usuario uObject) throws Exception{
+        boolean userExist = usuarioRepository.existsById(uObject.getId());
+        if (!userExist){
+            return null;
+        }
+        Estado estadoBaja = new Estado();
+        estadoBaja.setId(DADO_DE_BAJA);
+        estadoBaja.setDescripcion("DESHABILITADO");
+        uObject.setEstado(estadoBaja);
+        return usuarioRepository.saveAndFlush(uObject);
     }
 
     public Usuario findById(Long id){

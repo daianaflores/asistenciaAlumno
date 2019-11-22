@@ -21,22 +21,24 @@ public class CursadaService {
 
     private static  final Logger LOGGER = LogManager.getLogger(CursadaService.class);
 
-    public Cursada findById(Long id){
+    public Cursada findById(Long id) {
         Optional<Cursada> cursada = cursadaRepository.findById(id);
-        if(cursada.isPresent()){
+        if (cursada.isPresent()) {
             return cursada.get();
-        }else{
+        }
+        else {
             return null;
         }
     }
 
-    public List<CursadaDto> findAll(){
+    public List<CursadaDto> findAll() {
         List<Cursada> cList = cursadaRepository.findAll();
         List<CursadaDto> cursadaDtoList = cList.stream().map(it -> new CursadaDto(it)).collect(Collectors.toList());
         return cursadaDtoList;
     }
+
     @Transactional
-    public void updateCursada(Cursada cObject, String user){
+    public Cursada updateCursada(Cursada cObject, String user) {
         //me traigo la cursada ya grabada para modificar sus propiedades y luego lo vuelvo a grabar
         Cursada cursadaDb = findById(cObject.getId());
         List<Alumno> cursadaDbAlumnos = new ArrayList<>(cursadaDb.getCursadaAlumnos());
@@ -48,10 +50,12 @@ public class CursadaService {
         List<Alumno> removed= cursadaDbAlumnos.stream().filter(dbA -> cObjectAlumnosList.stream().noneMatch(a -> a.getId().equals(dbA.getId()))).collect(Collectors.toList());
         mergeObjects(cursadaDb,cObject);
         bindProperties(cursadaDb,user,new Date());
+        Cursada cursadaPersisted = null;
         /*reviso las listas y agrego o saco alumnos según sea necesario*/
-        if(added.isEmpty() && removed.isEmpty()){
-            save(cursadaDb);
-        }else {
+        if (added.isEmpty() && removed.isEmpty()) {
+            cursadaPersisted = save(cursadaDb);
+        }
+        else {
             if (!added.isEmpty()) {
                 for (Alumno a : added) {
                     if (cursadaDbAlumnos.contains(a)) {
@@ -64,7 +68,7 @@ public class CursadaService {
                 if (!nonExistinAlumnos.isEmpty()) {
                     Set toSet = new HashSet(nonExistinAlumnos);
                     cursadaDb.setCursadaAlumnos(toSet);
-                    save(cursadaDb);
+                    cursadaPersisted = save(cursadaDb);
                 }
             }
             if (!removed.isEmpty()) {
@@ -72,14 +76,17 @@ public class CursadaService {
                     cursadaDb.getCursadaAlumnos().remove(a);
                     LOGGER.info("se removió al alumno/a con número de matricula:" + a.getId() + " de la cursada");
                 }
-                save(cursadaDb);
+                cursadaPersisted = save(cursadaDb);
             }
         }
+        return cursadaPersisted;
     }
 
 
     //grabar objeto en base de datos
-    public void save(Cursada cursada){cursadaRepository.save(cursada);}
+    public Cursada save(Cursada cursada) {
+        return cursadaRepository.save(cursada);
+    }
 
     //metodo para setear los campos de auditoría
     public Cursada bindProperties(Cursada cObject, String user, Date currentDate){

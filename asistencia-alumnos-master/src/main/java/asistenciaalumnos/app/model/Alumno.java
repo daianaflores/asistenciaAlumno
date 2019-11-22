@@ -34,6 +34,9 @@ public class Alumno extends Auditable<String>{
 	@Column(name = "DNI", nullable = false)
 	private Long DNI;
 
+	@Column(name = "matricula", nullable = false)
+	private Long matricula;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_ESTADO", nullable = true)
 	private Estado estado;
@@ -76,6 +79,14 @@ public class Alumno extends Auditable<String>{
 
 	public void setDNI(Long DNI) {
 		this.DNI = DNI;
+	}
+
+	public Long getMatricula() {
+		return this.matricula;
+	}
+
+	public void setMatricula(Long matricula) {
+		this.matricula = matricula;
 	}
 
 	public String getNombre() {

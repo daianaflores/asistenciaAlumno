@@ -36,7 +36,7 @@ public class DocenteDto {
     }
 
     public Date getFechaNacimiento(){
-        return  this.docente.getFechaDeNacimiento();
+        return  this.docente.getFechaNacimiento();
     }
 
     public Long getLegajo(){
