@@ -77,7 +77,8 @@ public class UsuarioController {
     @PostMapping(path = "/usuarios")
     public ResponseEntity<?> altaUsuario(@RequestBody Usuario usuario) throws Exception{
         Usuario usuarioResponse = usuarioService.altaUsuario(usuario);
-        return new ResponseEntity<Usuario>(usuarioResponse, HttpStatus.OK);
+        UsuarioDto usuarioDto = new UsuarioDto(usuarioResponse);
+        return new ResponseEntity<UsuarioDto>(usuarioDto, HttpStatus.OK);
     }
 
     //metodo modificado según service
@@ -87,25 +88,28 @@ public class UsuarioController {
         if (usuarioResponse == null){
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Usuario>(usuarioResponse, HttpStatus.OK);
+        UsuarioDto usuarioDto = new UsuarioDto(usuarioResponse);
+        return new ResponseEntity<UsuarioDto>(usuarioDto, HttpStatus.OK);
     }
 
     @GetMapping(path = "/usuarios/{id}")
     public ResponseEntity<?> getUsuario(@PathVariable("id") Long id) throws Exception{
         Usuario uObject = usuarioServiceImpl.findById(id);
-        if (uObject == null){
+        if (uObject == null) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Usuario>(uObject, HttpStatus.OK);
+        UsuarioDto usuarioDto = new UsuarioDto(uObject);
+        return new ResponseEntity<UsuarioDto>(usuarioDto, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/usuarios/{id}")
     public ResponseEntity<?> bajaUsuario(@PathVariable("id") Long id) throws Exception{
         Usuario uObject = usuarioServiceImpl.findById(id);
-        if (uObject == null){
+        if (uObject == null) {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
         Usuario userPersisted = usuarioService.bajaUsuario(uObject);
-        return new ResponseEntity<Usuario>(userPersisted, HttpStatus.OK);
+        UsuarioDto usuarioDto = new UsuarioDto(userPersisted);
+        return new ResponseEntity<UsuarioDto>(usuarioDto, HttpStatus.OK);
     }
 }

@@ -26,11 +26,11 @@ public class UsuarioDto {
         return this.usuario.getNombre();
     }
 
-    public String getApelido(){
+    public String getApellido(){
         return this.usuario.getApellido();
     }
 
-    public String getFulnnName(){
+    public String getFullName(){
         return this.usuario.getApellido()+" "+this.usuario.getNombre();
     }
 
